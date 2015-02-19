@@ -14,6 +14,7 @@ import com.sdi.persistence.ContactoDao;
 import com.sdi.persistence.exception.AlreadyPersistedException;
 import com.sdi.persistence.exception.NotPersistedException;
 import com.sdi.persistence.exception.PersistenceException;
+import com.sdi.util.Conf;
 
 public class ContactoJdbcDao implements ContactoDao {
 
@@ -21,6 +22,9 @@ public class ContactoJdbcDao implements ContactoDao {
 
 	@Override
 	public List<Contacto> getContactos() {
+
+		String GET_CONTACTS = Conf.get("GET_CONTACTS");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -30,7 +34,7 @@ public class ContactoJdbcDao implements ContactoDao {
 
 			con = Jdbc.getConnection();
 
-			ps = con.prepareStatement("select * from public.contactos");
+			ps = con.prepareStatement(GET_CONTACTS);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -42,7 +46,6 @@ public class ContactoJdbcDao implements ContactoDao {
 				contacto.setDireccion(rs.getString("DIRECCION"));
 				contacto.setCiudad(rs.getString("CIUDAD"));
 				contacto.setAgenda_Usuario(rs.getString("AGENDA_USUARIO"));
-
 				contactos.add(contacto);
 			}
 		} catch (SQLException e) {
@@ -77,6 +80,9 @@ public class ContactoJdbcDao implements ContactoDao {
 
 	@Override
 	public List<Contacto> getLoginContactos(String login) {
+
+		String GET_CONTACTS_BY_AGENDA = Conf.get("GET_CONTACTS_BY_AGENDA");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -86,8 +92,8 @@ public class ContactoJdbcDao implements ContactoDao {
 
 			con = Jdbc.getConnection();
 
-			ps = con.prepareStatement("select * from public.contactos where(AGENDA_USUARIO='"
-					+ login + "')");
+			ps = con.prepareStatement(GET_CONTACTS_BY_AGENDA);
+			ps.setString(1, login);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
@@ -99,7 +105,6 @@ public class ContactoJdbcDao implements ContactoDao {
 				contacto.setDireccion(rs.getString("DIRECCION"));
 				contacto.setCiudad(rs.getString("CIUDAD"));
 				contacto.setAgenda_Usuario(rs.getString("AGENDA_USUARIO"));
-
 				contactos.add(contacto);
 			}
 		} catch (SQLException e) {
@@ -134,15 +139,18 @@ public class ContactoJdbcDao implements ContactoDao {
 
 	@Override
 	public void save(Contacto a) throws AlreadyPersistedException {
+
+		String INSERT_CONTACT = Conf.get("INSERT_CONTACT");
+
 		PreparedStatement ps = null;
+
 		int rows = 0;
 
 		try {
 
 			con = Jdbc.getConnection();
 
-			ps = con.prepareStatement("insert into contactos (email, nombre, apellidos, direccion, ciudad, agenda_usuario) "
-					+ "values (?, ?, ?, ?, ?, ?)");
+			ps = con.prepareStatement(INSERT_CONTACT);
 
 			ps.setString(1, a.getEmail());
 			ps.setString(2, a.getNombre());
@@ -152,8 +160,9 @@ public class ContactoJdbcDao implements ContactoDao {
 			ps.setString(6, a.getAgenda_Usuario());
 
 			rows = ps.executeUpdate();
+
 			if (rows != 1) {
-				throw new AlreadyPersistedException("Contacto " + a
+				throw new AlreadyPersistedException("Contact " + a
 						+ " already persisted");
 			}
 		} catch (SQLException e) {
@@ -180,16 +189,18 @@ public class ContactoJdbcDao implements ContactoDao {
 
 	@Override
 	public void update(Contacto a) throws NotPersistedException {
+
+		String UPDATE_CONTACT = Conf.get("UPDATE_CONTACT ");
+
 		PreparedStatement ps = null;
+
 		int rows = 0;
 
 		try {
 
 			con = Jdbc.getConnection();
 
-			ps = con.prepareStatement("update contactos "
-					+ "set email = ?, nombre = ?, apellidos = ?, direccion = ?, ciudad = ?, agenda_usuario = ?"
-					+ " where id = ?");
+			ps = con.prepareStatement(UPDATE_CONTACT);
 
 			ps.setString(1, a.getEmail());
 			ps.setString(2, a.getNombre());
@@ -200,8 +211,9 @@ public class ContactoJdbcDao implements ContactoDao {
 			ps.setLong(7, a.getId());
 
 			rows = ps.executeUpdate();
+
 			if (rows != 1) {
-				throw new NotPersistedException("Contacto " + a + " not found");
+				throw new NotPersistedException("Contact " + a + " not found");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -226,20 +238,24 @@ public class ContactoJdbcDao implements ContactoDao {
 
 	@Override
 	public void delete(int id) throws NotPersistedException {
+
+		String DELETE_CONTACT = Conf.get("DELETE_CONTACT");
+
 		PreparedStatement ps = null;
+
 		int rows = 0;
 
 		try {
 
 			con = Jdbc.getConnection();
 
-			ps = con.prepareStatement("delete from contactos where id = ?");
-
+			ps = con.prepareStatement(DELETE_CONTACT);
 			ps.setLong(1, id);
 
 			rows = ps.executeUpdate();
+
 			if (rows != 1) {
-				throw new NotPersistedException("Contacto " + id + " not found");
+				throw new NotPersistedException("Contact " + id + " not found");
 			}
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -265,15 +281,18 @@ public class ContactoJdbcDao implements ContactoDao {
 
 	@Override
 	public void deleteContactos() {
+
+		String DELETE_ALL_CONTACTS = Conf.get("DELETE_ALL_CONTACTS");
+
 		PreparedStatement ps = null;
 
 		try {
 
 			con = Jdbc.getConnection();
 
-			ps = con.prepareStatement("delete from contactos");
-
+			ps = con.prepareStatement(DELETE_ALL_CONTACTS);
 			ps.executeUpdate();
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new PersistenceException("Invalid SQL or database schema", e);
@@ -297,13 +316,16 @@ public class ContactoJdbcDao implements ContactoDao {
 
 	@Override
 	public void reiniciaID() {
+
+		String RESET_CONTACT_ID = Conf.get("RESET_CONTACT_ID");
+
 		PreparedStatement ps = null;
 
 		try {
 
 			con = Jdbc.getConnection();
 
-			ps = con.prepareStatement("ALTER TABLE PUBLIC.CONTACTOS ALTER COLUMN 'ID' RESTART WITH 1");
+			ps = con.prepareStatement(RESET_CONTACT_ID);
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -329,12 +351,15 @@ public class ContactoJdbcDao implements ContactoDao {
 
 	@Override
 	public void deleteContactosAdmin() {
+
+		String DELETE_ADMIN_CONTACTS = Conf.get("DELETE_ADMIN_CONTACTS");
+
 		PreparedStatement ps = null;
 
 		try {
 			con = Jdbc.getConnection();
 
-			ps = con.prepareStatement("delete from contactos where agenda_usuario = 'admin'");
+			ps = con.prepareStatement(DELETE_ADMIN_CONTACTS);
 
 			ps.executeUpdate();
 		} catch (SQLException e) {
@@ -360,6 +385,9 @@ public class ContactoJdbcDao implements ContactoDao {
 
 	@Override
 	public List<Contacto> getAdminContactos() {
+
+		String GET_ADMIN_CONTACTS = Conf.get("GET_ADMIN_CONTACTS");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
 
@@ -369,7 +397,7 @@ public class ContactoJdbcDao implements ContactoDao {
 
 			con = Jdbc.getConnection();
 
-			ps = con.prepareStatement("SELECT * FROM \"PUBLIC\".\"CONTACTOS\" inner join \"PUBLIC\".\"USUARIOS\" on \"CONTACTOS\".\"AGENDA_USUARIO\" = \"USUARIOS\".\"LOGIN\" where \"USUARIOS\".\"ROL\" = 'Administrador'");
+			ps = con.prepareStatement(GET_ADMIN_CONTACTS);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
