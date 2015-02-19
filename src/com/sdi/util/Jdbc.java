@@ -8,32 +8,21 @@ import java.sql.Statement;
 
 public class Jdbc {
 
-	/*
-	 * Configuration for Oracle private static String DRIVER =
-	 * "oracle.jdbc.driver.OracleDriver"; private static String URL =
-	 * "jdbc:oracle:thin:@156.35.94.99:1521:DESA"; private static String USER =
-	 * "sa"; private static String PASS = "";
-	 */
-	/*
-	 * Configuration for Hsqldb
-	 */
-
-	// private static DRIVER = "org.hsqldb.jdbcDriver";
-	// private static URL = "jdbc:hsqldb:hsql://localhost/localDB";
-	// private static USER = "sa";
-	// private static PASSWORD = "";
+	private static final String DRIVER = Conf.get("DRIVER");
+	private static final String CONNECTION = Conf.get("CONNECTION");
+	private static final String USER = Conf.get("USER");
+	private static final String PASSWORD = Conf.get("PASSWORD");
 
 	static {
 		try {
-			Class.forName("org.hsqldb.jdbcDriver");
+			Class.forName(DRIVER);
 		} catch (ClassNotFoundException e) {
 			throw new RuntimeException("Driver not found in classpath", e);
 		}
 	}
 
 	public static Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(
-				"jdbc:hsqldb:hsql://localhost/localDB", "sa", "");
+		return DriverManager.getConnection(CONNECTION, USER, PASSWORD);
 
 	}
 
