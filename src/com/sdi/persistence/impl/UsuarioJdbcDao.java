@@ -3,43 +3,36 @@ package com.sdi.persistence.impl;
 import java.sql.*;
 import java.util.*;
 
+import alb.util.jdbc.Jdbc;
+
 import com.sdi.model.Usuario;
 import com.sdi.persistence.UsuarioDao;
 import com.sdi.persistence.exception.*;
+import com.sdi.util.Conf;
 
-
-/**
- * Implementaci��n de la interfaz de fachada al servicio de persistencia para
- * Alumnos. En este caso es Jdbc pero podr��a ser cualquier otra tecnologia 
- * de persistencia, por ejemplo, la que veremos m��s adelante JPA 
- * (mapeador de objetos a relacional)
- * 
- * @author Enrique
- *
- */
 public class UsuarioJdbcDao implements UsuarioDao {
 
-	public List<Usuario> getUsuarios() throws PersistenceException{
+	private static Connection con = null;
+
+	public List<Usuario> getUsuarios() throws PersistenceException {
+
+		String GET_USER = Conf.get("GET_USER");
+		String GET_INFOUSER_BY_ID = Conf.get("GET_INFOUSER_BY_ID");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Connection con = null;
-		
+
 		List<Usuario> usuarios = new ArrayList<Usuario>();
 
 		try {
-			// En una implemenntaci��n m��s sofisticada estas constantes habr��a 
-			// que sacarlas a un sistema de configuraci��n: 
-			// xml, properties, descriptores de despliege, etc 
-			String SQL_DRV = "org.hsqldb.jdbcDriver";
-			String SQL_URL = "jdbc:hsqldb:hsql://localhost/localDB";
 
-			// Obtenemos la conexi��n a la base de datos.
-			Class.forName(SQL_DRV);
-			con = DriverManager.getConnection(SQL_URL, "sa", "");
-			ps = con.prepareStatement("select * from public.usuarios");
+			con = Jdbc.getConnection();
+
+			ps = con.prepareStatement(GET_USER);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {
+
 				Usuario usuario = new Usuario();
 				usuario.setLogin(rs.getString("LOGIN"));
 				usuario.setPasswd(rs.getString("PASSWD"));
@@ -48,153 +41,162 @@ public class UsuarioJdbcDao implements UsuarioDao {
 				usuario.setActivo(act);
 				int ID = rs.getInt("ID_INFOUSUARIO");
 				usuario.setId(ID);
-				
-				
+
 				PreparedStatement ps2 = null;
 				ResultSet rs2 = null;
-				ps2 = con.prepareStatement("select * from public.infousuarios where(ID='"+ID+"')");
+
+				ps2 = con.prepareStatement(GET_INFOUSER_BY_ID);
+				ps2.setInt(1, ID);
 				rs2 = ps2.executeQuery();
+
 				while (rs2.next()) {
 					usuario.setNombre(rs2.getString("NOMBRE"));
 					usuario.setApellidos(rs2.getString("APELLIDOS"));
 					usuario.setEmail(rs2.getString("EMAIL"));
 				}
+
 				rs2.close();
 				ps2.close();
-						
+
 				usuarios.add(usuario);
 			}
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new PersistenceException("Driver not found", e);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new PersistenceException("Invalid SQL or database schema", e);
-		} finally  {
-			if (rs != null) {try{ rs.close(); } catch (Exception ex){}};
-			if (ps != null) {try{ ps.close(); } catch (Exception ex){}};
-			if (con != null) {try{ con.close(); } catch (Exception ex){}};
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
 		}
-		
+
 		return usuarios;
 	}
 
 	@Override
-	public void save(Usuario a) throws AlreadyPersistedException, PersistenceException {
+	public void save(Usuario a) throws AlreadyPersistedException,
+			PersistenceException {
+
+		String INSERT_USER = Conf.get("INSERT_USER");
+		String GET_ID_BY_MAIL = Conf.get("GET_ID_BY_MAIL");
+		String INSERT_INFOUSER = Conf.get("INSERT_INFOUSER");
+
 		PreparedStatement ps = null;
-		Connection con = null;
 		ResultSet rs = null;
 		int rows = 0;
-		
-		try {
-			// En una implementaci��n m��s sofisticada estas constantes habr��a 
-			// que sacarlas a un sistema de configuraci��n: 
-			// xml, properties, descriptores de despliege, etc 
-			String SQL_DRV = "org.hsqldb.jdbcDriver";
-			String SQL_URL = "jdbc:hsqldb:hsql://localhost/localDB";
 
-			// Obtenemos la conexi��n a la base de datos.
-			Class.forName(SQL_DRV);
-			con = DriverManager.getConnection(SQL_URL, "sa", "");
-			
-			
-			ps = con.prepareStatement(
-					"insert into public.infousuarios (nombre, apellidos, email) " +
-					"values (?, ?, ?)");
-			
+		try {
+
+			con = Jdbc.getConnection();
+
+			ps = con.prepareStatement(INSERT_INFOUSER);
+
 			ps.setString(1, a.getNombre());
 			ps.setString(2, a.getApellidos());
-			ps.setString(3, a.getLogin()+"@micorreo.com");
-		
-				
+			ps.setString(3, a.getLogin() + "@micorreo.com");
+
 			rows = ps.executeUpdate();
 			if (rows != 1) {
-				throw new AlreadyPersistedException("InfoUsuario " + a + " already persisted");
-			} 
-			
-			 ps.close();
-			
-			
-			
-			ps = con.prepareStatement("SELECT ID FROM public.INFOUSUARIOS WHERE (EMAIL=" +"'"+ a.getLogin()+"@micorreo.com"+"'"+")");
+				throw new AlreadyPersistedException("InfoUser " + a
+						+ " already persisted");
+			}
+
+			ps.close();
+
+			ps = con.prepareStatement(GET_ID_BY_MAIL);
+			ps.setString(1, a.getLogin() + "@micorreo.com");
 			rs = ps.executeQuery();
 			int id = 0;
 			while (rs.next()) {
 				id = rs.getInt("ID");
 			}
-			
-			 rs.close();
-			 ps.close();
-			
-			ps = con.prepareStatement(
-					"insert into public.usuarios (login, passwd, rol, activo, id_InfoUsuario) " +
-					"values (?, ?, ?, ?, ?)");
-			
+
+			rs.close();
+			ps.close();
+
+			ps = con.prepareStatement(INSERT_USER);
+
 			ps.setString(1, a.getLogin());
 			ps.setString(2, a.getPasswd());
 			ps.setString(3, a.getRol());
 			ps.setString(4, "1");
-			ps.setString(5, id+"");
-				
+			ps.setString(5, id + "");
+
 			rows = ps.executeUpdate();
 			if (rows != 1) {
-				throw new AlreadyPersistedException("Usuarioo " + a + " already persisted");
-			} 
-			
-			 ps.close();
+				throw new AlreadyPersistedException("User " + a
+						+ " already persisted");
+			}
 
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new PersistenceException("Driver not found", e);
+			ps.close();
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new PersistenceException("Invalid SQL or database schema", e);
-		}
-		finally  {
-			if (ps != null) {try{ ps.close(); } catch (Exception ex){}};
-			if (con != null) {try{ con.close(); } catch (Exception ex){}};
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
 		}
 	}
 
 	@Override
-	public void update(Usuario a) throws NotPersistedException, PersistenceException {
-		PreparedStatement ps = null;
-		Connection con = null;
-		int rows = 0;
-		
-		try {
-			// En una implementaci��n m��s sofisticada estas constantes habr��a 
-			// que sacarlas a un sistema de configuraci��n: 
-			// xml, properties, descriptores de despliege, etc 
-			String SQL_DRV = "org.hsqldb.jdbcDriver";
-			String SQL_URL = "jdbc:hsqldb:hsql://localhost/localDB";
+	public void update(Usuario a) throws NotPersistedException,
+			PersistenceException {
 
-			// Obtenemos la conexi��n a la base de datos.
-			Class.forName(SQL_DRV);
-			con = DriverManager.getConnection(SQL_URL, "sa", "");
-			ps = con.prepareStatement(
-					"update public.usuarios " +
-					"set passwd = ?, activo = ?" +
-					"where login = ?");
-			
+		String UPDATE_USER = Conf.get("UPDATE_USER");
+		String UPDATE_INFOUSER = Conf.get("UPDATE_INFOUSER");
+
+		PreparedStatement ps = null;
+
+		int rows = 0;
+
+		try {
+
+			con = Jdbc.getConnection();
+
+			ps = con.prepareStatement(UPDATE_USER);
+
 			ps.setString(1, a.getPasswd());
 			ps.setBoolean(2, a.isActivo());
 			ps.setString(3, a.getLogin());
-			
 
 			rows = ps.executeUpdate();
 			if (rows != 1) {
-				throw new NotPersistedException("Usuarios " + a + " not found");
-			} 
-			
-			//infousuarios
+				throw new NotPersistedException("User " + a + " not found");
+			}
+
 			PreparedStatement ps2 = null;
-			ps2 = con.prepareStatement(
-					"update public.infousuarios " +
-					"set nombre = ?, apellidos = ?, email = ?" +
-					"where ID = ?");
-			
+			ps2 = con.prepareStatement(UPDATE_INFOUSER);
+
 			ps2.setString(1, a.getNombre());
 			ps2.setString(2, a.getApellidos());
 			ps2.setString(3, a.getEmail());
@@ -202,199 +204,218 @@ public class UsuarioJdbcDao implements UsuarioDao {
 
 			rows = ps2.executeUpdate();
 			if (rows != 1) {
-				throw new NotPersistedException("infoUsuarios " + a + " not found");
-			} 
+				throw new NotPersistedException("infoUser " + a + " not found");
+			}
 			ps2.close();
-			
-			
-			
-			
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new PersistenceException("Driver not found", e);
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new PersistenceException("Invalid SQL or database schema", e);
-		}
-		finally  {
-			if (ps != null) {try{ ps.close(); } catch (Exception ex){}};
-			if (con != null) {try{ con.close(); } catch (Exception ex){}};
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
 		}
 	}
 
 	@Override
-	public void delete(String login) throws NotPersistedException, PersistenceException {
-		// TODO Auto-generated method stub
+	public void delete(String login) throws NotPersistedException,
+			PersistenceException {
+
+		String DELETE_USER = Conf.get("DELETE_USER");
+
 		PreparedStatement ps = null;
-		Connection con = null;
 		int rows = 0;
-		
+
 		try {
-			// En una implementaci��n m��s sofisticada estas constantes habr��a 
-			// que sacarlas a un sistema de configuraci��n: 
-			// xml, properties, descriptores de despliege, etc 
-			String SQL_DRV = "org.hsqldb.jdbcDriver";
-			String SQL_URL = "jdbc:hsqldb:hsql://localhost/localDB";
 
-			// Obtenemos la conexi��n a la base de datos.
-			Class.forName(SQL_DRV);
-			con = DriverManager.getConnection(SQL_URL, "sa", "");
-			ps = con.prepareStatement("delete from usuarios where login = ?");
-			
+			con = Jdbc.getConnection();
+
+			ps = con.prepareStatement(DELETE_USER);
 			ps.setString(1, login);
-
 			rows = ps.executeUpdate();
+
 			if (rows != 1) {
-				throw new NotPersistedException("Usuario " + login + " not found");
-			} 
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new PersistenceException("Driver not found", e);
+				throw new NotPersistedException("User " + login + " not found");
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new PersistenceException("Invalid SQL or database schema", e);
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
 		}
-		finally  {
-			if (ps != null) {try{ ps.close(); } catch (Exception ex){}};
-			if (con != null) {try{ con.close(); } catch (Exception ex){}};
-		}
-		
+
 	}
 
 	@Override
-	public Usuario findByLogin(String login) throws PersistenceException{
-		// TODO Auto-generated method stub
+	public Usuario findByLogin(String login) throws PersistenceException {
+
+		String GET_USER_BY_LOGIN = Conf.get("GET_USER_BY_LOGIN");
+		String GET_INFOUSER_BY_ID = Conf.get("GET_INFOUSER_BY_ID");
+
 		PreparedStatement ps = null;
 		ResultSet rs = null;
-		Connection con = null;
 		Usuario usuario = null;
-		
-		try {
-			// En una implementaci��n m��s sofisticada estas constantes habr��a 
-			// que sacarlas a un sistema de configuraci��n: 
-			// xml, properties, descriptores de despliege, etc 
-			String SQL_DRV = "org.hsqldb.jdbcDriver";
-			String SQL_URL = "jdbc:hsqldb:hsql://localhost/localDB";
 
-			// Obtenemos la conexi��n a la base de datos.
-			Class.forName(SQL_DRV);
-			con = DriverManager.getConnection(SQL_URL, "sa", "");
-			ps = con.prepareStatement("select * from public.usuarios where login = ?");
+		try {
+
+			con = Jdbc.getConnection();
+
+			ps = con.prepareStatement(GET_USER_BY_LOGIN);
 			ps.setString(1, login);
-			
 			rs = ps.executeQuery();
+
 			if (rs.next()) {
 				usuario = new Usuario();
-				
 				usuario.setLogin(rs.getString("LOGIN"));
 				usuario.setPasswd(rs.getString("PASSWD"));
 				usuario.setRol(rs.getString("ROL"));
 				usuario.setActivo(rs.getBoolean("ACTIVO"));
 				usuario.setId(rs.getInt("ID_INFOUSUARIO"));
 			}
-			
-			
+
 			PreparedStatement ps2 = null;
 			ResultSet rs2 = null;
-			ps2 = con.prepareStatement("select * from public.infousuarios where id = ?");
-			if(usuario == null)
+
+			ps2 = con.prepareStatement(GET_INFOUSER_BY_ID);
+
+			if (usuario == null) {
 				return null;
+			}
+
 			ps2.setInt(1, usuario.getId());
-			
+
 			rs2 = ps2.executeQuery();
+
 			if (rs2.next()) {
-				
-	
+
 				usuario.setNombre(rs2.getString("NOMBRE"));
 				usuario.setApellidos(rs2.getString("APELLIDOS"));
 				usuario.setEmail(rs2.getString("EMAIL"));
 			}
-			
-			
+
 			ps2.close();
 			rs2.close();
-			
-			
-			
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new PersistenceException("Driver not found", e);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new PersistenceException("Invalid SQL or database schema", e);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
 		}
-		finally  {
-			if (rs != null) {try{ rs.close(); } catch (Exception ex){}};
-			if (ps != null) {try{ ps.close(); } catch (Exception ex){}};
-			if (con != null) {try{ con.close(); } catch (Exception ex){}};
-		}
-		
+
 		return usuario;
 	}
-	
-	public void deleteUsuarios(){
-		PreparedStatement ps = null;
-		Connection con = null;
-		
-		try {
-			// En una implementaci��n m��s sofisticada estas constantes habr��a 
-			// que sacarlas a un sistema de configuraci��n: 
-			// xml, properties, descriptores de despliege, etc 
-			String SQL_DRV = "org.hsqldb.jdbcDriver";
-			String SQL_URL = "jdbc:hsqldb:hsql://localhost/localDB";
 
-			// Obtenemos la conexi��n a la base de datos.
-			Class.forName(SQL_DRV);
-			con = DriverManager.getConnection(SQL_URL, "sa", "");
-			ps = con.prepareStatement("delete from infousuarios where NOMBRE != 'admin'");
-			
+	public void deleteUsuarios() {
+
+		String DELETE_INFOUSUARIO = Conf.get("DELETE_INFOUSUARIO");
+
+		PreparedStatement ps = null;
+
+		try {
+
+			con = Jdbc.getConnection();
+
+			ps = con.prepareStatement(DELETE_INFOUSUARIO);
 			ps.executeUpdate();
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new PersistenceException("Driver not found", e);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new PersistenceException("Invalid SQL or database schema", e);
-		}
-		finally  {
-			if (ps != null) {try{ ps.close(); } catch (Exception ex){}};
-			if (con != null) {try{ con.close(); } catch (Exception ex){}};
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
 		}
 	}
 
 	@Override
-	public void reiniciaID(){
+	public void reiniciaID() {
+
+		String RESET_ID = Conf.get("RESET_ID");
+
 		PreparedStatement ps = null;
-		Connection con = null;
-		
+
 		try {
-			// En una implementaci��n m��s sofisticada estas constantes habr��a 
-			// que sacarlas a un sistema de configuraci��n: 
-			// xml, properties, descriptores de despliege, etc 
-			String SQL_DRV = "org.hsqldb.jdbcDriver";
-			String SQL_URL = "jdbc:hsqldb:hsql://localhost/localDB";
 
-			// Obtenemos la conexi��n a la base de datos.
-			Class.forName(SQL_DRV);
-			con = DriverManager.getConnection(SQL_URL, "sa", "");
-			ps = con.prepareStatement("ALTER TABLE PUBLIC.INFOUSUARIOS ALTER COLUMN 'ID' RESTART WITH 2");
+			con = Jdbc.getConnection();
 
+			ps = con.prepareStatement(RESET_ID);
 			ps.executeUpdate();
-			
-		} catch (ClassNotFoundException e) {
-			e.printStackTrace();
-			throw new PersistenceException("Driver not found", e);
+
 		} catch (SQLException e) {
 			e.printStackTrace();
 			throw new PersistenceException("Invalid SQL or database schema", e);
-		}
-		finally  {
-			if (ps != null) {try{ ps.close(); } catch (Exception ex){}};
-			if (con != null) {try{ con.close(); } catch (Exception ex){}};
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
 		}
 	}
 
