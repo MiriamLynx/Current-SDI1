@@ -1,4 +1,5 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8"%>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
 <HTML>
 <TITLE>Lynxmail</TITLE>
 
@@ -23,21 +24,22 @@
 		</div>
 		<div class="row">
 			<div class="col-md-offset-4 col-md-4">
-				<div class="form-login">
+				<form class="form-login">
 					<h4 class="">Welcome back</h4>
-
 					<input type="text" id="userName"
 						class="form-control input-sm chat-input" placeholder="username">
 					<br class=""> <input type="password" id="userPassword"
 						class="form-control input-sm chat-input" placeholder="password">
 					<br class="">
+					<c:if test="${not empty error}">
+						<div style="color: red; font-weight: bold;">${error}</div>
+					</c:if>
+					<br class="">
 					<div class="wrapper">
-						<span class="group-btn"> <a href="#"
-							class="btn btn-primary btn-md">login <i class="fa fa-sign-in"></i></a>
-						</span>
-
+						<input type="hidden" name="opc" value="login"><input
+							type="submit" value="login" class="btn btn-primary btn-md">
 					</div>
-				</div>
+				</form>
 			</div>
 		</div>
 	</div>
