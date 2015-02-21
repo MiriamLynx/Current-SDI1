@@ -17,27 +17,27 @@
 
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#" class="">Home</a></li>
+				<li class="active"><a href="index.jsp" class="">Home</a></li>
 				<li><a href="#" class="">About</a></li>
 				<li><a href="#" class="">Contact</a></li>
 			</ul>
 		</div>
 		<div class="row">
 			<div class="col-md-offset-4 col-md-4">
-				<form class="form-login">
+				<form class="form-login" action="signin">
 					<h4 class="">Welcome back</h4>
-					<input type="text" id="userName"
+					<input type="text" id="username"
 						class="form-control input-sm chat-input" placeholder="username">
 					<br class=""> <input type="password" id="userPassword"
 						class="form-control input-sm chat-input" placeholder="password">
 					<br class="">
-					<c:if test="${not empty error}">
-						<div style="color: red; font-weight: bold;">${error}</div>
+					<c:if test="${not empty ERROR}">
+						<div style="color: red;">${ERROR}</div>
 					</c:if>
 					<br class="">
 					<div class="wrapper">
-						<input type="hidden" name="opc" value="login"><input
-							type="submit" value="login" class="btn btn-primary btn-md">
+						<input type="hidden" name="opc" value="signin"><input
+							type="submit" value="submit" class="btn btn-primary btn-md">
 					</div>
 				</form>
 			</div>

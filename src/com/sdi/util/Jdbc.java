@@ -10,8 +10,6 @@ public class Jdbc {
 
 	private static final String DRIVER = Conf.get("DRIVER");
 	private static final String CONNECTION = Conf.get("CONNECTION");
-	private static final String USER = Conf.get("USER");
-	private static final String PASSWORD = Conf.get("PASSWORD");
 
 	static {
 		try {
@@ -22,7 +20,7 @@ public class Jdbc {
 	}
 
 	public static Connection getConnection() throws SQLException {
-		return DriverManager.getConnection(CONNECTION, USER, PASSWORD);
+		return DriverManager.getConnection(CONNECTION, "sa", "");
 
 	}
 

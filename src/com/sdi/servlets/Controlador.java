@@ -105,7 +105,7 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		mapaDeAcciones = new HashMap<String, Map<String, Accion>>();
 
 		Map<String, Accion> mapaPublico = new HashMap<String, Accion>();
-		mapaPublico.put("validarse", new ValidarseAction());
+		mapaPublico.put("signin", new ValidarseAction());
 		mapaDeAcciones.put("PUBLICO", mapaPublico);
 
 		Map<String, Accion> mapaRegistrado = new HashMap<String, Accion>();
@@ -125,8 +125,11 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		Map<String, String> resJSP = new HashMap<String, String>();
 
 		// Mapa de navegación del público
+		resJSP.put("EXITO", "/login.jsp");
+		opcionResJSP.put("signin", resJSP);
+		resJSP = new HashMap<String, String>();
 		resJSP.put("FRACASO", "/login.jsp");
-		opcionResJSP.put("validarse", resJSP);
+		opcionResJSP.put("signin", resJSP);
 
 		mapaDeNavegacion.put("PUBLICO", opcionResJSP);
 
@@ -134,11 +137,11 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		resJSP = new HashMap<String, String>();
 
 		// Mapa de navegación de usuarios registrados
-		resJSP.put("EXITO", "/home.jsp");
-		opcionResJSP.put("login", resJSP);
-		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/home.jsp");
-		opcionResJSP.put("modificarDatos", resJSP);
+		// resJSP.put("EXITO", "/home.jsp");
+		// opcionResJSP.put("login", resJSP);
+		// resJSP = new HashMap<String, String>();
+		// resJSP.put("EXITO", "/home.jsp");
+		// opcionResJSP.put("modificarDatos", resJSP);
 
 		mapaDeNavegacion.put("REGISTRADO", opcionResJSP);
 
@@ -146,11 +149,11 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		resJSP = new HashMap<String, String>();
 
 		// Mapa de navegación del administrador
-		resJSP.put("EXITO", "/adminprincipal.jsp");
-		opcionResJSP.put("login", resJSP);
-		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/listausuarios.jsp");
-		opcionResJSP.put("listarUsuarios", resJSP);
+		// resJSP.put("EXITO", "/adminprincipal.jsp");
+		// opcionResJSP.put("login", resJSP);
+		// resJSP = new HashMap<String, String>();
+		// resJSP.put("EXITO", "/listausuarios.jsp");
+		// opcionResJSP.put("listarUsuarios", resJSP);
 
 		mapaDeNavegacion.put("ADMIN", opcionResJSP);
 

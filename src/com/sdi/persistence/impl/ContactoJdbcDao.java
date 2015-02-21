@@ -7,7 +7,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import alb.util.jdbc.Jdbc;
+import com.sdi.util.Jdbc;
 
 import com.sdi.model.Contacto;
 import com.sdi.persistence.ContactoDao;

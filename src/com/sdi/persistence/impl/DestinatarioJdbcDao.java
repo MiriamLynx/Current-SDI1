@@ -2,7 +2,7 @@ package com.sdi.persistence.impl;
 
 import java.sql.*;
 
-import alb.util.jdbc.Jdbc;
+import com.sdi.util.Jdbc;
 
 import com.sdi.model.Destinatario;
 import com.sdi.persistence.DestinatarioDao;

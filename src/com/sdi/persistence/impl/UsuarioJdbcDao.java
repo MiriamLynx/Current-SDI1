@@ -3,12 +3,11 @@ package com.sdi.persistence.impl;
 import java.sql.*;
 import java.util.*;
 
-import alb.util.jdbc.Jdbc;
-
 import com.sdi.model.Usuario;
 import com.sdi.persistence.UsuarioDao;
 import com.sdi.persistence.exception.*;
 import com.sdi.util.Conf;
+import com.sdi.util.Jdbc;
 
 public class UsuarioJdbcDao implements UsuarioDao {
 

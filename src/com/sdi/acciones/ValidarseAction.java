@@ -47,11 +47,10 @@ public class ValidarseAction implements Accion {
 
 	private void assertExisteUsuario(HttpServletRequest request, String login)
 			throws SQLException, BusinessException {
-		Usuario user = Check.getUsuarioByLogin(login);
+		this.user = Check.getUsuarioByLogin(login);
 		if (user == null) {
 			Check.throwError(request, "The introduced user does not exist");
 		}
-		this.user = user;
 	}
 
 	@Override
