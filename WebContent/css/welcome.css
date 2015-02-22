@@ -36,8 +36,8 @@ body {
 /* Fonts */
 h1 {
 	padding-bottom: 30px;
-	font: normal Roboto, arial, sans-serif;
-	color: #ffffff;
+	font: bold Roboto, arial, sans-serif;
+	color: #CECEF6;
 }
 
 h3 {

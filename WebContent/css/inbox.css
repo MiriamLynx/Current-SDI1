@@ -1,5 +1,10 @@
 @import url(http://fonts.googleapis.com/css?family=Roboto:400);
 
+a {
+	font: normal 14px Roboto, arial, sans-serif;
+	color: #CECEF6;
+}
+
 body {
 	background-color: #666;
 	-webkit-font-smoothing: antialiased;
@@ -11,7 +16,7 @@ body {
 }
 
 .dropdown-menu {
-	background-color: #CEE3F6;
+	background-color: #CECEF6;
 	padding-right: 10px;
 	padding-left: 10px;
 	width: 30px;

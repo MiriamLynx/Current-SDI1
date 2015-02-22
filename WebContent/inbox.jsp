@@ -23,21 +23,32 @@
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
 					data-toggle="dropdown">Options<b class="caret"></b>
 				</a>
+
 					<ul class="dropdown-menu">
-						<li><form action="signout" method="post" class="centered">
-								<input type="hidden" name="opc" value="sign out"><input
-									type="submit" value="signout">
-							</form></li>
+						<li>
+							<form action="signout" method="post" class="centered">
+								<input type="hidden" name="opc" value="sign out" class="">
+								<input type="submit" value="signout" class="">
+							</form>
+						</li>
 					</ul></li>
 			</ul>
 		</div>
 		<div class="container-head">
 			<button class="btn btn-default">Compose</button>
 		</div>
-		<div class="col-md-3">
-			<div class="wrap"></div>
+		<div class="col-md-2">
+			<div class="wrap">
+				<ul class="nav">
+					<li><a href="#" class="">Drafts</a></li>
+					<li><a href="#" class="">Sent mail</a></li>
+					<li><a href="#" class="">Inbox</a></li>
+					<li><a href="#" class="">Profile</a></li>
+					<li><a href="#" class="">Contacts</a></li>
+				</ul>
+			</div>
 		</div>
-		<div class="col-md-9">
+		<div class="col-md-10">
 			<div class="wrap"></div>
 		</div>
 	</div>

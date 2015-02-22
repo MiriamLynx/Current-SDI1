@@ -6,7 +6,7 @@
 <link href="lib/bootstrap-3.2.0-dist/css/bootstrap.min.css"
 	rel="stylesheet">
 <!-- Custom CSS -->
-<link href="css/index.css" rel="stylesheet">
+<link href="css/welcome.css" rel="stylesheet">
 
 <BODY>
 	<div class="container">
