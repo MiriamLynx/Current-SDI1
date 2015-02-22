@@ -109,11 +109,11 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		mapaDeAcciones.put("PUBLICO", mapaPublico);
 
 		Map<String, Accion> mapaRegistrado = new HashMap<String, Accion>();
-		mapaRegistrado.put("modificarDatos", new ModificarDatosAction());
+		mapaRegistrado.put("signout", new SalirAction());
 		mapaDeAcciones.put("REGISTRADO", mapaRegistrado);
 
 		Map<String, Accion> mapaAdmin = new HashMap<String, Accion>();
-		mapaAdmin.put("listarUsuarios", new ListarUsuariosAction());
+		mapaAdmin.put("signout", new SalirAction());
 		mapaDeAcciones.put("ADMIN", mapaAdmin);
 	}
 
@@ -130,6 +130,9 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		resJSP = new HashMap<String, String>();
 		resJSP.put("FRACASO", "/login.jsp");
 		opcionResJSP.put("signin", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/index.jsp");
+		opcionResJSP.put("signout", resJSP);
 
 		mapaDeNavegacion.put("PUBLICO", opcionResJSP);
 
@@ -139,9 +142,6 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		// Mapa de navegación de usuarios registrados
 		resJSP.put("EXITO", "/inbox.jsp");
 		opcionResJSP.put("signin", resJSP);
-		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/index.jsp");
-		opcionResJSP.put("signout", resJSP);
 
 		mapaDeNavegacion.put("REGISTRADO", opcionResJSP);
 
@@ -151,9 +151,6 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		// Mapa de navegación del administrador
 		resJSP.put("EXITO", "/inbox.jsp");
 		opcionResJSP.put("signin", resJSP);
-		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/index.jsp");
-		opcionResJSP.put("signout", resJSP);
 
 		mapaDeNavegacion.put("ADMIN", opcionResJSP);
 

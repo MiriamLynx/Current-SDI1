@@ -16,16 +16,16 @@
 
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#" class="">Home</a></li>
+				<li class="active"><a href="index.jsp" class="">Home</a></li>
 				<li><a href="#" class="">About</a></li>
 				<li><a href="#" class="">Contact</a></li>
 			</ul>
 		</div>
 		<div class="container-head" align="center">
 			<h1 class="">Welcome to Lynxmail</h1>
-
 			<a href="login.jsp" class="btn btn-default">Sign in </a> <a
 				href="register.jsp" class="btn btn-default">Sign up </a>
+
 		</div>
 		<div class="container-features" align="center">
 			<div class="container-image">

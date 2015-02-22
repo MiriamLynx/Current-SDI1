@@ -9,9 +9,14 @@ public class SalirAction implements Accion {
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		request.setAttribute("user", null);
+		request.getSession().setAttribute("user", null);
 
 		return "EXITO";
+	}
+
+	@Override
+	public String toString() {
+		return getClass().getName();
 	}
 
 }

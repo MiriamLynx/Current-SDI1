@@ -53,7 +53,7 @@ h5 {
 /* Containers */
 .container {
 	background-color: #444;
-	height: 100%;
+	padding: 25px;
 }
 
 .container-head {

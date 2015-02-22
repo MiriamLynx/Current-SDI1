@@ -24,8 +24,8 @@
 					data-toggle="dropdown">Options<b class="caret"></b>
 				</a>
 					<ul class="dropdown-menu">
-						<li><form action="signout" method="post">
-								<input type="hidden" name="opc" value="signout"><input
+						<li><form action="signout" method="post" class="centered">
+								<input type="hidden" name="opc" value="sign out"><input
 									type="submit" value="signout">
 							</form></li>
 					</ul></li>
