@@ -1,11 +1,14 @@
 package com.sdi.acciones;
 
 import java.sql.SQLException;
+import java.util.List;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.sdi.check.Check;
+import com.sdi.infrastructure.Factories;
+import com.sdi.model.Correo;
 import com.sdi.model.Usuario;
 import com.sdi.persistence.exception.BusinessException;
 
@@ -17,6 +20,8 @@ public class ValidarseAction implements Accion {
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) {
 
+		List<Correo> mails;
+
 		String login = request.getParameter("username");
 		String password = request.getParameter("password");
 
@@ -25,6 +30,11 @@ public class ValidarseAction implements Accion {
 			assertExisteUsuario(request, login);
 
 			assertValidSession(request, password);
+
+			mails = Factories.persistence.createCorreoDao()
+					.getLoginCarpetaCorreos(login, 1);
+
+			request.getSession().setAttribute("mailList", mails);
 
 			request.getSession().setAttribute("user", user);
 
