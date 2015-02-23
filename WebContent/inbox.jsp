@@ -17,7 +17,7 @@
 
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="#" class="droppedHover">Home</a></li>
+				<li class="active"><a href="inbox.jsp" class="droppedHover">Home</a></li>
 				<li><a href="#" class="">About</a></li>
 				<li><a href="#" class="">Contact</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -35,16 +35,16 @@
 				<button class="btn btn-default">Compose</button>
 			</div>
 			<div class="col-md-10" style="display: inline-block;">
-				<h1 class="">Sent Mail</h1>
+				<h1 class="">${tittle}</h1>
 
 			</div>
 		</div>
 		<div class="col-md-2">
 			<div class="wrap">
 				<ul class="nav">
-					<li><a href="#" class="">Sent mail</a></li>
-					<li><a href="#" class="">Drafts</a></li>
-					<li><a href="#" class="">Deleted</a></li>
+					<li><a href="sentmail" class="">Sent mail</a></li>
+					<li><a href="drafts" class="">Drafts</a></li>
+					<li><a href="deleted" class="">Deleted</a></li>
 					<li><a href="#" class="">Profile</a></li>
 					<li><a href="#" class="">Contacts</a></li>
 				</ul>

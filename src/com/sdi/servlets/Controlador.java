@@ -12,7 +12,12 @@ import javax.servlet.http.HttpSession;
 
 import alb.util.log.Log;
 
-import com.sdi.acciones.*;
+import com.sdi.acciones.Accion;
+import com.sdi.acciones.SalirAction;
+import com.sdi.acciones.ValidarseAction;
+import com.sdi.acciones.VerBorradoresAction;
+import com.sdi.acciones.VerEliminadosAction;
+import com.sdi.acciones.VerEnviadosAction;
 import com.sdi.model.Usuario;
 
 public class Controlador extends javax.servlet.http.HttpServlet {
@@ -110,6 +115,9 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 
 		Map<String, Accion> mapaRegistrado = new HashMap<String, Accion>();
 		mapaRegistrado.put("signout", new SalirAction());
+		mapaRegistrado.put("sentmail", new VerEnviadosAction());
+		mapaRegistrado.put("drafts", new VerBorradoresAction());
+		mapaRegistrado.put("deleted", new VerEliminadosAction());
 		mapaDeAcciones.put("REGISTRADO", mapaRegistrado);
 
 		Map<String, Accion> mapaAdmin = new HashMap<String, Accion>();
@@ -142,6 +150,15 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		// Mapa de navegación de usuarios registrados
 		resJSP.put("EXITO", "/inbox.jsp");
 		opcionResJSP.put("signin", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/inbox.jsp");
+		opcionResJSP.put("sentmail", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/inbox.jsp");
+		opcionResJSP.put("drafts", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/inbox.jsp");
+		opcionResJSP.put("deleted", resJSP);
 
 		mapaDeNavegacion.put("REGISTRADO", opcionResJSP);
 

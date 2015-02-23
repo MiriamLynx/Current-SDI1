@@ -34,9 +34,9 @@ public class ValidarseAction implements Accion {
 			mails = Factories.persistence.createCorreoDao()
 					.getLoginCarpetaCorreos(login, 1);
 
-			request.getSession().setAttribute("mailList", mails);
+			request.setAttribute("mailList", mails);
 
-			request.getSession().setAttribute("tittle", "Sent Mail");
+			request.setAttribute("tittle", "Sent Mail");
 
 			request.getSession().setAttribute("user", user);
 

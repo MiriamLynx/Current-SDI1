@@ -9,7 +9,7 @@ import com.sdi.infrastructure.Factories;
 import com.sdi.model.Correo;
 import com.sdi.model.Usuario;
 
-public class VerEnviadosAction implements Accion {
+public class VerEliminadosAction implements Accion {
 
 	@Override
 	public String execute(HttpServletRequest request,
@@ -18,14 +18,15 @@ public class VerEnviadosAction implements Accion {
 		List<Correo> mails;
 
 		Usuario user = (Usuario) request.getSession().getAttribute("user");
+
 		String login = user.getLogin();
 
 		mails = Factories.persistence.createCorreoDao().getLoginCarpetaCorreos(
-				login, 1);
+				login, 3);
 
 		request.getSession().setAttribute("mailList", mails);
 
-		request.getSession().setAttribute("tittle", "Sent Mail");
+		request.getSession().setAttribute("tittle", "Deleted");
 
 		return "EXITO";
 
