@@ -36,6 +36,8 @@ public class ValidarseAction implements Accion {
 
 			request.getSession().setAttribute("mailList", mails);
 
+			request.getSession().setAttribute("tittle", "Sent Mail");
+
 			request.getSession().setAttribute("user", user);
 
 			return "EXITO";
