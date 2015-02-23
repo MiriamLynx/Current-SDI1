@@ -16,12 +16,19 @@ public class Check {
 
 	public static void throwError(HttpServletRequest request, String error)
 			throws BusinessException {
-		request.setAttribute("ERROR", error);
+		request.setAttribute("error", error);
 		throw new BusinessException(error);
 	}
 
 	public static boolean checkSession(Usuario user, String password) {
 		if (user.getPasswd().equals(password) && user.isActivo()) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean checkPassword(String password, String repeatpassword) {
+		if (password.equals(repeatpassword)) {
 			return true;
 		}
 		return false;

@@ -31,8 +31,8 @@
 					<br class=""> <input type="password" name="password"
 						id="password" class="form-control input-sm chat-input"
 						placeholder="password"> <br class="">
-					<c:if test="${not empty ERROR}">
-						<div style="color: red;">${ERROR}</div>
+					<c:if test="${not empty error}">
+						<div style="color: red;">${error}</div>
 					</c:if>
 					<br class="">
 					<div class="wrapper">

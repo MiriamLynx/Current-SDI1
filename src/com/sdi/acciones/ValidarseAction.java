@@ -20,7 +20,9 @@ public class ValidarseAction implements Accion {
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		List<Correo> mails;
+		List<Correo> mailList;
+		List<Usuario> activeUserList;
+		List<Usuario> inactiveUserList;
 
 		String login = request.getParameter("username");
 		String password = request.getParameter("password");
@@ -31,12 +33,32 @@ public class ValidarseAction implements Accion {
 
 			assertValidSession(request, password);
 
-			mails = Factories.persistence.createCorreoDao()
-					.getLoginCarpetaCorreos(login, 1);
+			if (user.getRol().equals("Cliente")) {
 
-			request.setAttribute("mailList", mails);
+				mailList = Factories.persistence.createCorreoDao()
+						.getLoginCarpetaCorreos(login, 1);
 
-			request.setAttribute("tittle", "Sent Mail");
+				request.setAttribute("mailList", mailList);
+
+				request.setAttribute("tittle", "Sent Mail");
+
+			} else {
+				if (user.getRol().equals("Administrador")) {
+
+					activeUserList = Factories.persistence.createUsuarioDao()
+							.getUsuariosActivos();
+
+					inactiveUserList = Factories.persistence.createUsuarioDao()
+							.getUsuariosInactivos();
+
+					request.setAttribute("activeUserList", activeUserList);
+
+					request.setAttribute("inactiveUserList", inactiveUserList);
+
+					request.setAttribute("tittle", "Users");
+
+				}
+			}
 
 			request.getSession().setAttribute("user", user);
 

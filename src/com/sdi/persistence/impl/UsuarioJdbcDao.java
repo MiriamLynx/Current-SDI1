@@ -90,6 +90,160 @@ public class UsuarioJdbcDao implements UsuarioDao {
 		return usuarios;
 	}
 
+	public List<Usuario> getUsuariosInactivos() throws PersistenceException {
+
+		String GET_DESACTIVATED_USERS = Conf.get("GET_DESACTIVATED_USERS");
+		String GET_INFOUSER_BY_ID = Conf.get("GET_INFOUSER_BY_ID");
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+
+		try {
+
+			con = Jdbc.getConnection();
+
+			ps = con.prepareStatement(GET_DESACTIVATED_USERS);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				Usuario usuario = new Usuario();
+				usuario.setLogin(rs.getString("LOGIN"));
+				usuario.setPasswd(rs.getString("PASSWD"));
+				usuario.setRol(rs.getString("ROL"));
+				boolean act = rs.getBoolean("ACTIVO");
+				usuario.setActivo(act);
+				int ID = rs.getInt("ID_INFOUSUARIO");
+				usuario.setId(ID);
+
+				PreparedStatement ps2 = null;
+				ResultSet rs2 = null;
+
+				ps2 = con.prepareStatement(GET_INFOUSER_BY_ID);
+				ps2.setInt(1, ID);
+				rs2 = ps2.executeQuery();
+
+				while (rs2.next()) {
+					usuario.setNombre(rs2.getString("NOMBRE"));
+					usuario.setApellidos(rs2.getString("APELLIDOS"));
+					usuario.setEmail(rs2.getString("EMAIL"));
+				}
+
+				rs2.close();
+				ps2.close();
+
+				usuarios.add(usuario);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new PersistenceException("Invalid SQL or database schema", e);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+		}
+
+		return usuarios;
+	}
+
+	public List<Usuario> getUsuariosActivos() throws PersistenceException {
+
+		String GET_ACTIVATED_USERS = Conf.get("GET_ACTIVATED_USERS");
+		String GET_INFOUSER_BY_ID = Conf.get("GET_INFOUSER_BY_ID");
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+
+		List<Usuario> usuarios = new ArrayList<Usuario>();
+
+		try {
+
+			con = Jdbc.getConnection();
+
+			ps = con.prepareStatement(GET_ACTIVATED_USERS);
+			rs = ps.executeQuery();
+
+			while (rs.next()) {
+
+				Usuario usuario = new Usuario();
+				usuario.setLogin(rs.getString("LOGIN"));
+				usuario.setPasswd(rs.getString("PASSWD"));
+				usuario.setRol(rs.getString("ROL"));
+				boolean act = rs.getBoolean("ACTIVO");
+				usuario.setActivo(act);
+				int ID = rs.getInt("ID_INFOUSUARIO");
+				usuario.setId(ID);
+
+				PreparedStatement ps2 = null;
+				ResultSet rs2 = null;
+
+				ps2 = con.prepareStatement(GET_INFOUSER_BY_ID);
+				ps2.setInt(1, ID);
+				rs2 = ps2.executeQuery();
+
+				while (rs2.next()) {
+					usuario.setNombre(rs2.getString("NOMBRE"));
+					usuario.setApellidos(rs2.getString("APELLIDOS"));
+					usuario.setEmail(rs2.getString("EMAIL"));
+				}
+
+				rs2.close();
+				ps2.close();
+
+				usuarios.add(usuario);
+			}
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new PersistenceException("Invalid SQL or database schema", e);
+		} finally {
+			if (rs != null) {
+				try {
+					rs.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+		}
+
+		return usuarios;
+	}
+
 	@Override
 	public void save(Usuario a) throws AlreadyPersistedException,
 			PersistenceException {
@@ -136,7 +290,7 @@ public class UsuarioJdbcDao implements UsuarioDao {
 			ps.setString(1, a.getLogin());
 			ps.setString(2, a.getPasswd());
 			ps.setString(3, a.getRol());
-			ps.setString(4, "1");
+			ps.setString(4, "0");
 			ps.setString(5, id + "");
 
 			rows = ps.executeUpdate();

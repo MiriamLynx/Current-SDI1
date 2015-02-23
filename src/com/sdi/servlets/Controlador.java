@@ -13,11 +13,13 @@ import javax.servlet.http.HttpSession;
 import alb.util.log.Log;
 
 import com.sdi.acciones.Accion;
+import com.sdi.acciones.RegistrarseAction;
 import com.sdi.acciones.SalirAction;
 import com.sdi.acciones.ValidarseAction;
 import com.sdi.acciones.VerBorradoresAction;
 import com.sdi.acciones.VerEliminadosAction;
 import com.sdi.acciones.VerEnviadosAction;
+import com.sdi.acciones.VerUsuariosAction;
 import com.sdi.model.Usuario;
 
 public class Controlador extends javax.servlet.http.HttpServlet {
@@ -111,6 +113,7 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 
 		Map<String, Accion> mapaPublico = new HashMap<String, Accion>();
 		mapaPublico.put("signin", new ValidarseAction());
+		mapaPublico.put("signup", new RegistrarseAction());
 		mapaDeAcciones.put("PUBLICO", mapaPublico);
 
 		Map<String, Accion> mapaRegistrado = new HashMap<String, Accion>();
@@ -122,6 +125,7 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 
 		Map<String, Accion> mapaAdmin = new HashMap<String, Accion>();
 		mapaAdmin.put("signout", new SalirAction());
+		mapaAdmin.put("users", new VerUsuariosAction());
 		mapaDeAcciones.put("ADMIN", mapaAdmin);
 	}
 
@@ -141,6 +145,12 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		resJSP = new HashMap<String, String>();
 		resJSP.put("EXITO", "/welcome.jsp");
 		opcionResJSP.put("signout", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("FRACASO", "/register.jsp");
+		opcionResJSP.put("signup", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/register.jsp");
+		opcionResJSP.put("signup", resJSP);
 
 		mapaDeNavegacion.put("PUBLICO", opcionResJSP);
 
@@ -168,6 +178,9 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		// Mapa de navegación del administrador
 		resJSP.put("EXITO", "/inbox.jsp");
 		opcionResJSP.put("signin", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/inbox.jsp");
+		opcionResJSP.put("users", resJSP);
 
 		mapaDeNavegacion.put("ADMIN", opcionResJSP);
 
