@@ -11,7 +11,7 @@
 
 <BODY>
 	<div class="container">
-		<div class="navbar navbar-default navbar-static" style="opacity: 0.8;">
+		<div class="navbar navbar-default navbar-static" style="opacity: 0.9;">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">Lynxmail</a>
 

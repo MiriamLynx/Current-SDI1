@@ -10,7 +10,12 @@ body {
 h1 {
 	padding-bottom: 30px;
 	font: bold Roboto, arial, sans-serif;
+	text-shadow: 1px 1px 4px rgba(255, 255, 255, 1);
+	font-weight: bold;
 	color: #CECEF6;
+	letter-spacing: 1pt;
+	word-spacing: 2pt;
+	line-height: 1;
 }
 
 h3 {

@@ -11,7 +11,7 @@
 
 <BODY>
 	<div class="container">
-		<div class="navbar navbar-default navbar-static" style="opacity: 0.8;">
+		<div class="navbar navbar-default navbar-static" style="opacity: 0.9;">
 			<div class="navbar-header">
 				<a class="navbar-brand droppedHover" href="#">Lynxmail</a>
 			</div>
@@ -61,7 +61,7 @@
 					<c:forEach var="entry" items="${mailList}">
 						<div id="accordion" class="panel-group"
 							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
-							<div class="panel panel-default" style="opacity: 0.6;">
+							<div class="panel panel-default" style="opacity: 0.7;">
 								<div class="panel-heading" style="margin: 0px;">
 									<label class=""> <input type="checkbox" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</label> <a data-toggle="collapse" data-parent="#accordion"
@@ -98,7 +98,7 @@
 						<c:forEach var="entry" items="${inactiveUserList}">
 							<div id="accordion" class="panel-group"
 								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
-								<div class="panel panel-default" style="opacity: 0.6;">
+								<div class="panel panel-default" style="opacity: 0.7;">
 									<div class="panel-heading" style="margin: 0px;">
 										<label class=""> <input type="checkbox"
 											name="toActivate" value="${entry.login}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -132,7 +132,7 @@
 						<c:forEach var="entry" items="${activeUserList}">
 							<div id="accordion" class="panel-group"
 								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
-								<div class="panel panel-default" style="opacity: 0.6;">
+								<div class="panel panel-default" style="opacity: 0.7;">
 									<div class="panel-heading" style="margin: 0px;">
 										<label class=""> <input type="checkbox"
 											name="toDeactivate" value="${entry.login}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
