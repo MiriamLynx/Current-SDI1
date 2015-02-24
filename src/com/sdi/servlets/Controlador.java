@@ -13,6 +13,9 @@ import javax.servlet.http.HttpSession;
 import alb.util.log.Log;
 
 import com.sdi.acciones.Accion;
+import com.sdi.acciones.ActivarODesactivarUsuariosAction;
+import com.sdi.acciones.ModificarUsuarioAction;
+import com.sdi.acciones.PerfilAction;
 import com.sdi.acciones.RegistrarseAction;
 import com.sdi.acciones.SalirAction;
 import com.sdi.acciones.ValidarseAction;
@@ -126,6 +129,10 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		Map<String, Accion> mapaAdmin = new HashMap<String, Accion>();
 		mapaAdmin.put("signout", new SalirAction());
 		mapaAdmin.put("users", new VerUsuariosAction());
+		mapaAdmin.put("activate", new ActivarODesactivarUsuariosAction(1));
+		mapaAdmin.put("deactivate", new ActivarODesactivarUsuariosAction(0));
+		mapaAdmin.put("profile", new PerfilAction());
+		mapaAdmin.put("modifyuser", new ModificarUsuarioAction());
 		mapaDeAcciones.put("ADMIN", mapaAdmin);
 	}
 
@@ -181,6 +188,21 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		resJSP = new HashMap<String, String>();
 		resJSP.put("EXITO", "/inbox.jsp");
 		opcionResJSP.put("users", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/inbox.jsp");
+		opcionResJSP.put("activate", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/inbox.jsp");
+		opcionResJSP.put("deactivate", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/modify.jsp");
+		opcionResJSP.put("profile", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/modify.jsp");
+		opcionResJSP.put("modifyuser", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("FRACASO", "/modify.jsp");
+		opcionResJSP.put("modifyuser", resJSP);
 
 		mapaDeNavegacion.put("ADMIN", opcionResJSP);
 

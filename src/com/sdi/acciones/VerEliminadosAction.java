@@ -8,6 +8,7 @@ import javax.servlet.http.HttpServletResponse;
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.Correo;
 import com.sdi.model.Usuario;
+import com.sdi.persistence.CorreoDao;
 
 public class VerEliminadosAction implements Accion {
 
@@ -21,8 +22,9 @@ public class VerEliminadosAction implements Accion {
 
 		String login = user.getLogin();
 
-		mails = Factories.persistence.createCorreoDao().getLoginCarpetaCorreos(
-				login, 3);
+		CorreoDao mailsDao = Factories.persistence.createCorreoDao();
+
+		mails = mailsDao.getLoginCarpetaCorreos(login, 3);
 
 		request.getSession().setAttribute("mailList", mails);
 

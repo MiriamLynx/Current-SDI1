@@ -83,50 +83,69 @@
 					</c:forEach>
 				</c:if>
 				<c:if test="${user.rol == 'Administrador'}">
-					<c:if test="${not empty inactiveUserList}">
-						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px;">
-							<h4 style="color: #CECEF6;">Inactive Users</h4>
-						</div>
-					</c:if>
-					<c:forEach var="entry" items="${inactiveUserList}">
-						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px;">
-							<div class="panel panel-default">
-								<div class="panel-heading" style="margin: 0px;">
-									<label class=""> <input type="checkbox" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									</label> <span class="name" style="min-width: 120px;">${entry.nombre}</span>
-									<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-									<span>${entry.apellidos}</span><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-									<span>${entry.email}</span> <span class="pull-right"></span>
+					<form class="form-login" action="activate" method="post">
+						<c:if test="${not empty inactiveUserList}">
+							<div id="accordion" class="panel-group"
+								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px; display: inline-block;">
+								<h4 style="color: #CECEF6; display: inline-block;">Inactive
+									Users</h4>
+							</div>
+							<div id="accordion" class="panel-group"
+								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px; display: inline-block;">
+								<input type="submit" value="Activate"
+									style="display: inline-block;">
+							</div>
+						</c:if>
+						<c:forEach var="entry" items="${inactiveUserList}">
+							<div id="accordion" class="panel-group"
+								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px;">
+								<div class="panel panel-default">
+									<div class="panel-heading" style="margin: 0px;">
+										<label class=""> <input type="checkbox"
+											name="toActivate" value="${entry.login}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										</label> <a href="profile?user=${entry.login}"> <span class="name"
+											style="min-width: 120px;">${entry.nombre}</span> <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+											<span>${entry.apellidos}</span><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+											<span>${entry.email}</span> <span class="pull-right"></span>
+										</a>
+									</div>
 								</div>
 							</div>
-						</div>
-					</c:forEach>
-					<c:if
-						test="${not empty activeUserList && not empty inactiveUserList}">
-						<br />
-					</c:if>
-					<c:if test="${not empty activeUserList}">
-						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px;">
-							<h4 style="color: #CECEF6;">Active Users</h4>
-						</div>
-					</c:if>
-					<c:forEach var="entry" items="${activeUserList}">
-						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px;">
-							<div class="panel panel-default">
-								<div class="panel-heading" style="margin: 0px;">
-									<label class=""> <input type="checkbox" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									</label> <span class="name" style="min-width: 120px;">${entry.nombre}</span>
-									<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-									<span>${entry.apellidos}</span><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-									<span>${entry.email}</span> <span class="pull-right"></span>
+						</c:forEach>
+					</form>
+					<form class="form-login" action="deactivate" method="post">
+						<c:if
+							test="${not empty activeUserList && not empty inactiveUserList}">
+							<br />
+						</c:if>
+						<c:if test="${not empty activeUserList}">
+							<div id="accordion" class="panel-group"
+								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px; display: inline-block;">
+								<h4 style="color: #CECEF6; display: inline-block;">Active
+									Users</h4>
+							</div>
+							<div id="accordion" class="panel-group"
+								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px; display: inline-block;">
+								<input type="submit" value="Deactivate"
+									style="display: inline-block;">
+							</div>
+						</c:if>
+						<c:forEach var="entry" items="${activeUserList}">
+							<div id="accordion" class="panel-group"
+								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px;">
+								<div class="panel panel-default">
+									<div class="panel-heading" style="margin: 0px;">
+										<label class=""> <input type="checkbox"
+											name="toDeactivate" value="${entry.login}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										</label> <a href="profile?user=${entry.login}"><span class="name"
+											style="min-width: 120px;">${entry.nombre}</span> <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+											<span>${entry.apellidos}</span><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+											<span>${entry.email}</span> <span class="pull-right"></span></a>
+									</div>
 								</div>
 							</div>
-						</div>
-					</c:forEach>
+						</c:forEach>
+					</form>
 				</c:if>
 			</div>
 		</div>

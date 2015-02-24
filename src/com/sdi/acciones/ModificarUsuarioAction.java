@@ -1,7 +1,5 @@
 package com.sdi.acciones;
 
-import java.sql.SQLException;
-
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
@@ -11,55 +9,46 @@ import com.sdi.model.Usuario;
 import com.sdi.persistence.UsuarioDao;
 import com.sdi.persistence.exception.AlreadyPersistedException;
 import com.sdi.persistence.exception.BusinessException;
+import com.sdi.persistence.exception.PersistenceException;
 
-public class RegistrarseAction implements Accion {
+public class ModificarUsuarioAction implements Accion {
 
 	@Override
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		String login = request.getParameter("username");
 		String name = request.getParameter("name");
 		String surname = request.getParameter("surname");
 		String password = request.getParameter("password");
 		String repeatpassword = request.getParameter("repeatpassword");
+		String mail = request.getParameter("mail");
 
 		UsuarioDao usersDao = Factories.persistence.createUsuarioDao();
 
 		try {
 
-			assertNoExisteUsuario(request, login);
+			if (password != null && repeatpassword != null) {
+				assertValidPassword(request, password, repeatpassword);
+			}
 
-			assertValidPassword(request, password, repeatpassword);
-
-			Usuario user = new Usuario();
-			user.setLogin(login);
+			Usuario user = usersDao.findByLogin(getLogin(mail));
 			user.setNombre(name);
 			user.setApellidos(surname);
-			user.setPasswd(password);
-			user.setRol("Cliente");
 
-			usersDao.save(user);
+			usersDao.updateUserData(user, getLogin(mail));
 
 			request.setAttribute("exit",
-					"The user has been succesfully created");
+					"The user has been succesfully updated");
 
-		} catch (AlreadyPersistedException e) {
-			return "FRACASO";
 		} catch (BusinessException e) {
 			return "FRACASO";
-		} catch (SQLException e) {
+		} catch (PersistenceException e) {
+			return "FRACASO";
+		} catch (AlreadyPersistedException e) {
 			return "FRACASO";
 		}
-		return "EXITO";
-	}
 
-	private void assertNoExisteUsuario(HttpServletRequest request, String login)
-			throws SQLException, BusinessException {
-		Usuario user = Check.getUsuarioByLogin(login);
-		if (user != null) {
-			Check.throwError(request, "The introduced user already exists");
-		}
+		return "EXITO";
 	}
 
 	private void assertValidPassword(HttpServletRequest request,
@@ -67,6 +56,11 @@ public class RegistrarseAction implements Accion {
 		if (!Check.checkPassword(password, repeatpassword)) {
 			Check.throwError(request, "The introduced passwords do not match");
 		}
+	}
+
+	private String getLogin(String mail) {
+		String[] split = mail.split("@");
+		return split[0];
 	}
 
 	@Override

@@ -1,11 +1,17 @@
 package com.sdi.persistence.impl;
 
-import java.sql.*;
-import java.util.*;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.sdi.model.Usuario;
 import com.sdi.persistence.UsuarioDao;
-import com.sdi.persistence.exception.*;
+import com.sdi.persistence.exception.AlreadyPersistedException;
+import com.sdi.persistence.exception.NotPersistedException;
+import com.sdi.persistence.exception.PersistenceException;
 import com.sdi.util.Conf;
 import com.sdi.util.Jdbc;
 
@@ -292,6 +298,79 @@ public class UsuarioJdbcDao implements UsuarioDao {
 			ps.setString(3, a.getRol());
 			ps.setString(4, "0");
 			ps.setString(5, id + "");
+
+			rows = ps.executeUpdate();
+			if (rows != 1) {
+				throw new AlreadyPersistedException("User " + a
+						+ " already persisted");
+			}
+
+			ps.close();
+		} catch (SQLException e) {
+			e.printStackTrace();
+			throw new PersistenceException("Invalid SQL or database schema", e);
+		} finally {
+			if (ps != null) {
+				try {
+					ps.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+			if (con != null) {
+				try {
+					con.close();
+				} catch (Exception ex) {
+				}
+			}
+			;
+		}
+	}
+
+	@Override
+	public void updateUserData(Usuario a, String login)
+			throws AlreadyPersistedException, PersistenceException {
+
+		String UPDATE_DATA_USER = Conf.get("UPDATE_DATA_USER");
+		String GET_ID_BY_MAIL = Conf.get("GET_ID_BY_MAIL");
+		String UPDATE_INFOUSER = Conf.get("UPDATE_INFOUSER");
+
+		PreparedStatement ps = null;
+		ResultSet rs = null;
+		int rows = 0;
+
+		try {
+
+			con = Jdbc.getConnection();
+
+			ps = con.prepareStatement(UPDATE_INFOUSER);
+
+			ps.setString(1, a.getNombre());
+			ps.setString(2, a.getApellidos());
+			ps.setString(3, a.getLogin() + "@micorreo.com");
+			ps.setInt(4, a.getId());
+
+			rows = ps.executeUpdate();
+			if (rows != 1) {
+				throw new AlreadyPersistedException("InfoUser " + a
+						+ " already persisted");
+			}
+
+			ps.close();
+
+			ps = con.prepareStatement(GET_ID_BY_MAIL);
+			ps.setString(1, a.getLogin() + "@micorreo.com");
+			rs = ps.executeQuery();
+
+			rs.close();
+			ps.close();
+
+			ps = con.prepareStatement(UPDATE_DATA_USER);
+
+			ps.setString(1, a.getNombre());
+			ps.setString(2, a.getApellidos());
+			ps.setString(3, a.getPasswd());
+			ps.setString(4, login);
 
 			rows = ps.executeUpdate();
 			if (rows != 1) {

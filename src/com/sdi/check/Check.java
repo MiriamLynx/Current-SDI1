@@ -20,11 +20,15 @@ public class Check {
 		throw new BusinessException(error);
 	}
 
-	public static boolean checkSession(Usuario user, String password) {
-		if (user.getPasswd().equals(password) && user.isActivo()) {
-			return true;
+	public static int checkSession(Usuario user, String password) {
+		if (!user.getPasswd().equals(password)) {
+			return -1;
+		}else{
+			if(!user.isActivo()){
+				return -2;
+			}
 		}
-		return false;
+		return 0;
 	}
 
 	public static boolean checkPassword(String password, String repeatpassword) {
