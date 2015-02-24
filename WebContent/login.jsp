@@ -11,7 +11,7 @@
 
 <BODY>
 	<div class="container">
-		<div class="navbar navbar-default navbar-static">
+		<div class="navbar navbar-default navbar-static" style="opacity: 0.8;">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">Lynxmail</a>
 
@@ -26,9 +26,9 @@
 			<div class="col-md-offset-4 col-md-4">
 				<form class="form-login" action="signin" method="post">
 					<h4 class="">Welcome back</h4>
-					<input type="text" name="username" id="username"
+					<input type="text" required name="username" id="username"
 						class="form-control input-sm chat-input" placeholder="username">
-					<br class=""> <input type="password" name="password"
+					<br class=""> <input type="password" required name="password"
 						id="password" class="form-control input-sm chat-input"
 						placeholder="password"> <br class="">
 					<c:if test="${not empty error}">

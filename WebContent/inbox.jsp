@@ -11,13 +11,12 @@
 
 <BODY>
 	<div class="container">
-		<div class="navbar navbar-default navbar-static">
+		<div class="navbar navbar-default navbar-static" style="opacity: 0.8;">
 			<div class="navbar-header">
 				<a class="navbar-brand droppedHover" href="#">Lynxmail</a>
-
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="inbox.jsp" class="droppedHover">Home</a></li>
+				<li class="active"><a href="#" class="droppedHover">Home</a></li>
 				<li><a href="#" class="">About</a></li>
 				<li><a href="#" class="">Contact</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -32,7 +31,7 @@
 		<div class="container-head">
 			<div class="col-md-2" style="display: inline-block;">
 				<br class=""> <br class="">
-				<button class="btn btn-default">Compose</button>
+				<button class="btnc btn-primary btn-md">Compose</button>
 			</div>
 			<div class="col-md-10" style="display: inline-block;">
 				<h1 class="">${tittle}</h1>
@@ -61,8 +60,8 @@
 				<c:if test="${user.rol == 'Cliente'}">
 					<c:forEach var="entry" items="${mailList}">
 						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px;">
-							<div class="panel panel-default">
+							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
+							<div class="panel panel-default" style="opacity: 0.6;">
 								<div class="panel-heading" style="margin: 0px;">
 									<label class=""> <input type="checkbox" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 									</label> <a data-toggle="collapse" data-parent="#accordion"
@@ -86,20 +85,20 @@
 					<form class="form-login" action="activate" method="post">
 						<c:if test="${not empty inactiveUserList}">
 							<div id="accordion" class="panel-group"
-								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px; display: inline-block;">
+								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
 								<h4 style="color: #CECEF6; display: inline-block;">Inactive
 									Users</h4>
 							</div>
 							<div id="accordion" class="panel-group"
-								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px; display: inline-block;">
-								<input type="submit" value="Activate"
-									style="display: inline-block;">
+								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
+								<button class="btn btn-primary btn-md"
+									style="display: inline-block; padding: 0px; padding-right: 2x; padding-left: 2x;">Activate</button>
 							</div>
 						</c:if>
 						<c:forEach var="entry" items="${inactiveUserList}">
 							<div id="accordion" class="panel-group"
-								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px;">
-								<div class="panel panel-default">
+								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
+								<div class="panel panel-default" style="opacity: 0.6;">
 									<div class="panel-heading" style="margin: 0px;">
 										<label class=""> <input type="checkbox"
 											name="toActivate" value="${entry.login}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -120,20 +119,20 @@
 						</c:if>
 						<c:if test="${not empty activeUserList}">
 							<div id="accordion" class="panel-group"
-								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px; display: inline-block;">
+								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
 								<h4 style="color: #CECEF6; display: inline-block;">Active
 									Users</h4>
 							</div>
 							<div id="accordion" class="panel-group"
-								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px; display: inline-block;">
-								<input type="submit" value="Deactivate"
-									style="display: inline-block;">
+								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
+								<button class="btn btn-primary btn-md"
+									style="display: inline-block; padding: 0px; padding-right: 2x; padding-left: 2x;">Deactivate</button>
 							</div>
 						</c:if>
 						<c:forEach var="entry" items="${activeUserList}">
 							<div id="accordion" class="panel-group"
-								style="margin-bottom: 0px; margin-left: 20px; margin-right: 20px;">
-								<div class="panel panel-default">
+								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
+								<div class="panel panel-default" style="opacity: 0.6;">
 									<div class="panel-heading" style="margin: 0px;">
 										<label class=""> <input type="checkbox"
 											name="toDeactivate" value="${entry.login}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;

@@ -37,7 +37,4 @@ public interface UsuarioDao {
 
 	void reiniciaID();
 
-	void updateUserData(Usuario a, String login)
-			throws AlreadyPersistedException, PersistenceException;
-
 }

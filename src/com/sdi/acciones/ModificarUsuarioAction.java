@@ -7,8 +7,8 @@ import com.sdi.check.Check;
 import com.sdi.infrastructure.Factories;
 import com.sdi.model.Usuario;
 import com.sdi.persistence.UsuarioDao;
-import com.sdi.persistence.exception.AlreadyPersistedException;
 import com.sdi.persistence.exception.BusinessException;
+import com.sdi.persistence.exception.NotPersistedException;
 import com.sdi.persistence.exception.PersistenceException;
 
 public class ModificarUsuarioAction implements Accion {
@@ -27,24 +27,28 @@ public class ModificarUsuarioAction implements Accion {
 
 		try {
 
+			Usuario user = usersDao.findByLogin(getLogin(mail));
+
 			if (password != null && repeatpassword != null) {
 				assertValidPassword(request, password, repeatpassword);
+				user.setPasswd(password);
 			}
 
-			Usuario user = usersDao.findByLogin(getLogin(mail));
 			user.setNombre(name);
 			user.setApellidos(surname);
 
-			usersDao.updateUserData(user, getLogin(mail));
+			usersDao.update(user);
 
 			request.setAttribute("exit",
 					"The user has been succesfully updated");
+
+			request.setAttribute("profile", user);
 
 		} catch (BusinessException e) {
 			return "FRACASO";
 		} catch (PersistenceException e) {
 			return "FRACASO";
-		} catch (AlreadyPersistedException e) {
+		} catch (NotPersistedException e) {
 			return "FRACASO";
 		}
 

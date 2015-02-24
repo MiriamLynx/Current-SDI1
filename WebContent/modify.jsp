@@ -11,13 +11,12 @@
 
 <BODY>
 	<div class="container">
-		<div class="navbar navbar-default navbar-static">
+		<div class="navbar navbar-default navbar-static" style="opacity: 0.8;">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">Lynxmail</a>
-
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="welcome.jsp" class="">Home</a></li>
+				<li class="active"><a href="users" class="">Home</a></li>
 				<li><a href="#" class="">About</a></li>
 				<li><a href="#" class="">Contact</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -32,12 +31,12 @@
 			<div class="col-md-offset-4 col-md-4">
 				<form class="form-login" action="modifyuser" method="post">
 					<h4 class="">Enter your changes</h4>
-					<input type="text" name="name"
+					<input type="text" required name="name"
 						class="form-control input-sm chat-input" value="${profile.nombre}">
-					<br class=""> <input type="text" name="surname"
+					<br class=""> <input type="text" required name="surname"
 						class="form-control input-sm chat-input"
 						value="${profile.apellidos}"><br class=""> <input
-						type="text" contenteditable="false" name="mail"
+						type="text" readonly contenteditable="false" name="mail"
 						class="form-control input-sm chat-input" value="${profile.email}">
 					<br class="">
 					<div id="accordion" class="panel-group">
@@ -70,8 +69,7 @@
 					</c:if>
 					<br />
 					<div class="wrapper">
-						<input type="hidden" name="opc" value="modify"><input
-							type="submit" value="submit" class="btn btn-primary btn-md">
+						<input type="submit" value="submit" class="btn btn-primary btn-md">
 					</div>
 				</form>
 			</div>

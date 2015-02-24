@@ -10,7 +10,7 @@
 
 <BODY>
 	<div class="container">
-		<div class="navbar navbar-default navbar-static">
+		<div class="navbar navbar-default navbar-static" style="opacity: 0.8;">
 			<div class="navbar-header">
 				<a class="navbar-brand" href="#">Lynxmail</a>
 
@@ -23,13 +23,13 @@
 		</div>
 		<div class="container-head" align="center">
 			<h1 class="">Welcome to Lynxmail</h1>
-			<a href="login.jsp" class="btn btn-default">Sign in </a> <a
-				href="register.jsp" class="btn btn-default">Sign up </a>
+			<a href="login.jsp" class="btn btn-primary btn-md">Sign in </a> <a
+				href="register.jsp" class="btn btn-primary btn-md">Sign up </a>
 
 		</div>
 		<div class="container-features" align="center">
 			<div class="container-image">
-				<img src="http://placehold.it/150x100" class="img-responsive">
+				<img src="img/computer.png" class="img-responsive">
 				<h3 class="">First mail to allow cats to use it</h3>
 
 				<h5 class="">We are not racist at all so if you want to send
@@ -37,14 +37,14 @@
 
 			</div>
 			<div class="container-image">
-				<img src="http://placehold.it/150x100" class="img-responsive">
+				<img src="img/reading.png" class="img-responsive">
 				<h3 class="">We swear we won't read your mails</h3>
 
 				<h5 class="">We won't send them to the NSA either</h5>
 
 			</div>
 			<div class="container-image">
-				<img src="http://placehold.it/150x100" class="img-responsive">
+				<img src="img/swag.png" class="img-responsive">
 				<h3 class="">We're the coolest programmers</h3>
 
 				<h5 class="">And we have a lot of swag because yolo</h5>
