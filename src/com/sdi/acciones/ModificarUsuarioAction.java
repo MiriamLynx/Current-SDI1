@@ -30,9 +30,14 @@ public class ModificarUsuarioAction implements Accion {
 
 			Usuario user = (Usuario) request.getSession().getAttribute("user");
 
-			if (user.getRol().equals("Administrador")) {
+			request.setAttribute("profile", user);
+
+			if (request.getParameter("opc").equals("Registrado")
+					&& user.getRol().equals("Administrador")) {
 
 				user = usersDao.findByLogin(getLogin(mail));
+
+				request.setAttribute("profile", user);
 
 				if (password.length() > 0 && repeatpassword.length() > 0) {
 					assertValidPassword(request, password, repeatpassword);
@@ -41,6 +46,8 @@ public class ModificarUsuarioAction implements Accion {
 
 			} else {
 
+				request.setAttribute("currentpassword", true);
+
 				if (password.length() > 0 && repeatpassword.length() > 0
 						&& currentpassword.length() > 0) {
 					assertValidPassword(request, password, repeatpassword);
@@ -48,14 +55,14 @@ public class ModificarUsuarioAction implements Accion {
 					user.setPasswd(password);
 				}
 
-				request.setAttribute("currentpassword", true);
-
 			}
 
 			user.setNombre(name);
 			user.setApellidos(surname);
 
 			usersDao.update(user);
+
+			request.setAttribute("profile", user);
 
 			request.setAttribute("exit",
 					"The user has been succesfully updated");

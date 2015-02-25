@@ -29,7 +29,8 @@
 		</div>
 		<div class="row">
 			<div class="col-md-offset-4 col-md-4">
-				<form class="form-login" action="modifyuser" method="post">
+				<form class="form-login" action="modifyuser?opc=${profile.rol}"
+					method="post">
 					<h4 class="">Enter your changes</h4>
 					<input type="text" required name="name"
 						class="form-control input-sm chat-input" value="${profile.nombre}">
