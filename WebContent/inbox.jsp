@@ -49,7 +49,7 @@
 					<c:if test="${user.rol == 'Administrador'}">
 						<li><a href="users" class="">Users</a></li>
 					</c:if>
-					<li><a href="#" class="">Profile</a></li>
+					<li><a href="updateprofile" class="">Profile</a></li>
 					<li><a href="#" class="">Contacts</a></li>
 				</ul>
 			</div>

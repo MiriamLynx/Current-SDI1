@@ -49,6 +49,12 @@
 							</div>
 							<div id="collapseOne" class="panel-collapse collapse">
 								<div class="panel-body">
+									<c:if test="${not empty currentpassword}">
+										<input type="password" name="currentpassword"
+											class="form-control input-sm chat-input"
+											placeholder="current password">
+										<br class="">
+									</c:if>
 									<input type="password" name="password"
 										class="form-control input-sm chat-input"
 										placeholder="password"> <br class=""> <input

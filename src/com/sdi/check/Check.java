@@ -23,8 +23,8 @@ public class Check {
 	public static int checkSession(Usuario user, String password) {
 		if (!user.getPasswd().equals(password)) {
 			return -1;
-		}else{
-			if(!user.isActivo()){
+		} else {
+			if (!user.isActivo()) {
 				return -2;
 			}
 		}
@@ -33,6 +33,14 @@ public class Check {
 
 	public static boolean checkPassword(String password, String repeatpassword) {
 		if (password.equals(repeatpassword)) {
+			return true;
+		}
+		return false;
+	}
+
+	public static boolean checkCurrentPassword(Usuario user,
+			String currentpassword) {
+		if (currentpassword.equals(user.getPasswd())) {
 			return true;
 		}
 		return false;

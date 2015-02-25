@@ -20,6 +20,7 @@ public class ModificarUsuarioAction implements Accion {
 		String name = request.getParameter("name");
 		String surname = request.getParameter("surname");
 		String password = request.getParameter("password");
+		String currentpassword = request.getParameter("currentpassword");
 		String repeatpassword = request.getParameter("repeatpassword");
 		String mail = request.getParameter("mail");
 
@@ -27,11 +28,28 @@ public class ModificarUsuarioAction implements Accion {
 
 		try {
 
-			Usuario user = usersDao.findByLogin(getLogin(mail));
+			Usuario user = (Usuario) request.getSession().getAttribute("user");
 
-			if (password != null && repeatpassword != null) {
-				assertValidPassword(request, password, repeatpassword);
-				user.setPasswd(password);
+			if (user.getRol().equals("Administrador")) {
+
+				user = usersDao.findByLogin(getLogin(mail));
+
+				if (password.length() > 0 && repeatpassword.length() > 0) {
+					assertValidPassword(request, password, repeatpassword);
+					user.setPasswd(password);
+				}
+
+			} else {
+
+				if (password.length() > 0 && repeatpassword.length() > 0
+						&& currentpassword.length() > 0) {
+					assertValidPassword(request, password, repeatpassword);
+					assertCurrentPassword(request, currentpassword, user);
+					user.setPasswd(password);
+				}
+
+				request.setAttribute("currentpassword", true);
+
 			}
 
 			user.setNombre(name);
@@ -53,6 +71,14 @@ public class ModificarUsuarioAction implements Accion {
 		}
 
 		return "EXITO";
+	}
+
+	private void assertCurrentPassword(HttpServletRequest request,
+			String currentpassword, Usuario user) throws BusinessException {
+		if (!Check.checkCurrentPassword(user, currentpassword)) {
+			Check.throwError(request,
+					"The introduced current password is not correct");
+		}
 	}
 
 	private void assertValidPassword(HttpServletRequest request,
