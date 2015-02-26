@@ -58,28 +58,46 @@
 			<!-- Tab panes -->
 			<div class="wrap">
 				<c:if test="${user.rol == 'Cliente'}">
-					<c:forEach var="entry" items="${mailList}">
-						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
-							<div class="panel panel-default" style="opacity: 0.7;">
-								<div class="panel-heading" style="margin: 0px;">
-									<label class=""> <input type="checkbox" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									</label> <a data-toggle="collapse" data-parent="#accordion"
-										href="#${entry.id}" class="collapsed" class="list-group-item">
-										<span class="name" style="min-width: 120px;">${entry.asunto}</span>
-										<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-										<span>${entry.fechahora}</span> <span class="pull-right"></span>
-									</a>
-								</div>
-								<div id="${entry.id}" class="panel-collapse collapse"
-									style="height: 0px;">
-									<div class="panel-body">
-										<p class="">${entry.cuerpo}</p>
+					<form class="form-login" action="draft" method="post">
+						<c:if test="${tittle == 'Drafts'}">
+							<div id="accordion" class="panel-group"
+								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
+								<h4 style="color: #CECEF6; display: inline-block;">Options</h4>
+							</div>
+							<div id="accordion" class="panel-group"
+								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
+								<button class="btn btn-primary btn-md"
+									style="display: inline-block; padding: 0px; padding-right: 2x; padding-left: 2x;">Edit
+									Draft</button>
+							</div>
+							<c:if test="${not empty error}">
+								<div style="color: red; display: inline-block;">${error}</div>
+							</c:if>
+						</c:if>
+						<c:forEach var="entry" items="${mailList}">
+							<div id="accordion" class="panel-group"
+								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
+								<div class="panel panel-default" style="opacity: 0.7;">
+									<div class="panel-heading" style="margin: 0px;">
+										<label class=""> <input type="checkbox" name="draft"
+											value="${entry.id}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
+										</label> <a data-toggle="collapse" data-parent="#accordion"
+											href="#${entry.id}" class="collapsed" class="list-group-item">
+											<span class="name" style="min-width: 120px;">${entry.asunto}</span>
+											<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+											<span>${entry.fechahora}</span> <span class="pull-right"></span>
+										</a>
+									</div>
+									<div id="${entry.id}" class="panel-collapse collapse"
+										style="height: 0px;">
+										<div class="panel-body">
+											<p class="">${entry.cuerpo}</p>
+										</div>
 									</div>
 								</div>
 							</div>
-						</div>
-					</c:forEach>
+						</c:forEach>
+					</form>
 				</c:if>
 				<c:if test="${user.rol == 'Administrador'}">
 					<form class="form-login" action="activate" method="post">

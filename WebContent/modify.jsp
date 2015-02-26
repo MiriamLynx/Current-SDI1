@@ -92,7 +92,7 @@
 						</c:if>
 						<c:if test="${user.rol == 'Administrador'}">
 							<div class="wrapper" style="display: inline-block;">
-								<a href="sentmail" class="btn btn-primary btn-md"
+								<a href="users" class="btn btn-primary btn-md"
 									style="display: inline-block;">Cancel</a>
 							</div>
 						</c:if>
