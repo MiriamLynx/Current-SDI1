@@ -20,6 +20,7 @@ import com.sdi.acciones.RegistrarseAction;
 import com.sdi.acciones.SalirAction;
 import com.sdi.acciones.ValidarseAction;
 import com.sdi.acciones.VerBorradoresAction;
+import com.sdi.acciones.VerContactosAction;
 import com.sdi.acciones.VerEliminadosAction;
 import com.sdi.acciones.VerEnviadosAction;
 import com.sdi.acciones.VerUsuariosAction;
@@ -126,6 +127,7 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		mapaRegistrado.put("deleted", new VerEliminadosAction());
 		mapaRegistrado.put("updateprofile", new PerfilAction("profile"));
 		mapaRegistrado.put("modifyuser", new ModificarUsuarioAction());
+		mapaRegistrado.put("contacts", new VerContactosAction());
 		mapaDeAcciones.put("REGISTRADO", mapaRegistrado);
 
 		Map<String, Accion> mapaAdmin = new HashMap<String, Accion>();
@@ -136,6 +138,7 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		mapaAdmin.put("profile", new PerfilAction("admin"));
 		mapaAdmin.put("updateprofile", new PerfilAction("profile"));
 		mapaAdmin.put("modifyuser", new ModificarUsuarioAction());
+		mapaAdmin.put("contacts", new VerContactosAction());
 		mapaDeAcciones.put("ADMIN", mapaAdmin);
 	}
 
@@ -148,8 +151,6 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 
 		// Mapa de navegación del público
 		resJSP.put("EXITO", "/inbox.jsp");
-		opcionResJSP.put("signin", resJSP);
-		resJSP = new HashMap<String, String>();
 		resJSP.put("FRACASO", "/login.jsp");
 		opcionResJSP.put("signin", resJSP);
 		resJSP = new HashMap<String, String>();
@@ -157,8 +158,6 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		opcionResJSP.put("signout", resJSP);
 		resJSP = new HashMap<String, String>();
 		resJSP.put("FRACASO", "/register.jsp");
-		opcionResJSP.put("signup", resJSP);
-		resJSP = new HashMap<String, String>();
 		resJSP.put("EXITO", "/register.jsp");
 		opcionResJSP.put("signup", resJSP);
 
@@ -184,10 +183,11 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		opcionResJSP.put("modifyuser", resJSP);
 		resJSP = new HashMap<String, String>();
 		resJSP.put("FRACASO", "/modify.jsp");
-		opcionResJSP.put("modifyuser", resJSP);
-		resJSP = new HashMap<String, String>();
 		resJSP.put("EXITO", "/modify.jsp");
 		opcionResJSP.put("updateprofile", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/contacts.jsp");
+		opcionResJSP.put("contacts", resJSP);
 
 		mapaDeNavegacion.put("REGISTRADO", opcionResJSP);
 
@@ -211,13 +211,14 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		opcionResJSP.put("profile", resJSP);
 		resJSP = new HashMap<String, String>();
 		resJSP.put("EXITO", "/modify.jsp");
-		opcionResJSP.put("modifyuser", resJSP);
-		resJSP = new HashMap<String, String>();
 		resJSP.put("FRACASO", "/modify.jsp");
 		opcionResJSP.put("modifyuser", resJSP);
 		resJSP = new HashMap<String, String>();
 		resJSP.put("EXITO", "/modify.jsp");
 		opcionResJSP.put("updateprofile", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/contacts.jsp");
+		opcionResJSP.put("contacts", resJSP);
 
 		mapaDeNavegacion.put("ADMIN", opcionResJSP);
 

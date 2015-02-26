@@ -16,7 +16,12 @@
 				<a class="navbar-brand" href="#">Lynxmail</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="users" class="">Home</a></li>
+				<c:if test="${user.rol == 'Cliente'}">
+					<li class="active"><a href="sentmail" class="">Home</a></li>
+				</c:if>
+				<c:if test="${user.rol == 'Administrador'}">
+					<li class="active"><a href="users" class="">Home</a></li>
+				</c:if>
 				<li><a href="#" class="">About</a></li>
 				<li><a href="#" class="">Contact</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -29,8 +34,7 @@
 		</div>
 		<div class="row">
 			<div class="col-md-offset-4 col-md-4">
-				<form class="form-login" action="modifyuser?opc=${profile.rol}"
-					method="post">
+				<form class="form-login" action="modifyuser" method="post">
 					<h4 class="">Enter your changes</h4>
 					<input type="text" required name="name"
 						class="form-control input-sm chat-input" value="${profile.nombre}">
@@ -76,7 +80,22 @@
 					</c:if>
 					<br />
 					<div class="wrapper">
-						<input type="submit" value="submit" class="btn btn-primary btn-md">
+						<div class="wrapper" style="display: inline-block;">
+							<input type="submit" value="Submit"
+								class="btn btn-primary btn-md" style="display: inline-block;">
+						</div>
+						<c:if test="${user.rol == 'Cliente'}">
+							<div class="wrapper" style="display: inline-block;">
+								<a href="sentmail" class="btn btn-primary btn-md"
+									style="display: inline-block;">Cancel</a>
+							</div>
+						</c:if>
+						<c:if test="${user.rol == 'Administrador'}">
+							<div class="wrapper" style="display: inline-block;">
+								<a href="sentmail" class="btn btn-primary btn-md"
+									style="display: inline-block;">Cancel</a>
+							</div>
+						</c:if>
 					</div>
 				</form>
 			</div>

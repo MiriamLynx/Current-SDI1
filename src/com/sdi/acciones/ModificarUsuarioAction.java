@@ -29,45 +29,40 @@ public class ModificarUsuarioAction implements Accion {
 		try {
 
 			Usuario user = (Usuario) request.getSession().getAttribute("user");
+			Usuario toUpdate = usersDao.findByLogin(getLogin(mail));
 
-			request.setAttribute("profile", user);
+			request.setAttribute("profile", toUpdate);
 
-			if (request.getParameter("opc").equals("Registrado")
+			if (toUpdate.getRol().equals("Cliente")
 					&& user.getRol().equals("Administrador")) {
 
-				user = usersDao.findByLogin(getLogin(mail));
-
-				request.setAttribute("profile", user);
-
-				if (password.length() > 0 && repeatpassword.length() > 0) {
+				if (password.length() > 0 || repeatpassword.length() > 0) {
 					assertValidPassword(request, password, repeatpassword);
-					user.setPasswd(password);
+					toUpdate.setPasswd(password);
 				}
 
 			} else {
 
 				request.setAttribute("currentpassword", true);
 
-				if (password.length() > 0 && repeatpassword.length() > 0
-						&& currentpassword.length() > 0) {
+				if (password.length() > 0 || repeatpassword.length() > 0
+						|| currentpassword.length() > 0) {
 					assertValidPassword(request, password, repeatpassword);
-					assertCurrentPassword(request, currentpassword, user);
-					user.setPasswd(password);
+					assertCurrentPassword(request, currentpassword, toUpdate);
+					toUpdate.setPasswd(password);
 				}
 
 			}
 
-			user.setNombre(name);
-			user.setApellidos(surname);
+			toUpdate.setNombre(name);
+			toUpdate.setApellidos(surname);
 
-			usersDao.update(user);
+			usersDao.update(toUpdate);
 
-			request.setAttribute("profile", user);
+			request.setAttribute("profile", toUpdate);
 
 			request.setAttribute("exit",
 					"The user has been succesfully updated");
-
-			request.setAttribute("profile", user);
 
 		} catch (BusinessException e) {
 			return "FRACASO";

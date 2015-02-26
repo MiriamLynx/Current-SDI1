@@ -32,16 +32,20 @@ public class Check {
 	}
 
 	public static boolean checkPassword(String password, String repeatpassword) {
-		if (password.equals(repeatpassword)) {
-			return true;
+		if (password.length() > 0 && repeatpassword.length() > 0) {
+			if (password.equals(repeatpassword)) {
+				return true;
+			}
 		}
 		return false;
 	}
 
 	public static boolean checkCurrentPassword(Usuario user,
 			String currentpassword) {
-		if (currentpassword.equals(user.getPasswd())) {
-			return true;
+		if (currentpassword.length() > 0) {
+			if (currentpassword.equals(user.getPasswd())) {
+				return true;
+			}
 		}
 		return false;
 	}
