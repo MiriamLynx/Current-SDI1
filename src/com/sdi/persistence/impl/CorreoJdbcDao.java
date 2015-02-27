@@ -94,6 +94,7 @@ public class CorreoJdbcDao implements CorreoDao {
 			con = Jdbc.getConnection();
 
 			ps = con.prepareStatement(GET_RECIPIENTS_MAIL);
+			ps.setInt(1, idCorreo);
 			rs = ps.executeQuery();
 
 			while (rs.next()) {

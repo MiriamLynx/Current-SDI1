@@ -28,6 +28,8 @@ public class CargarBorradorAction implements Accion {
 		String[] ids = request.getParameterValues("draft");
 		if (ids.length > 1) {
 			Check.throwError(request, "You can only edit one draft at once");
+		} else if (ids.length == 0) {
+			Check.throwError(request, "You must select the draft to edit");
 		}
 		this.id = ids[0];
 	}

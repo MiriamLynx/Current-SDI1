@@ -58,7 +58,7 @@
 			<!-- Tab panes -->
 			<div class="wrap">
 				<c:if test="${user.rol == 'Cliente'}">
-					<c:forEach var="entry" items="${contactsList}">
+					<c:forEach var="entry" items="${user.contactos}">
 						<div id="accordion" class="panel-group"
 							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
 							<div class="panel panel-default" style="opacity: 0.7;">

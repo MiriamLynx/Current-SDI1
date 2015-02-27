@@ -1,5 +1,7 @@
 package com.sdi.model;
 
+import java.util.List;
+
 public class Correo {
 
 	private Integer id;
@@ -8,6 +10,8 @@ public class Correo {
 	private String cuerpo;
 	private int carpeta;
 	private String login_Usuario;
+
+	private List<Contacto> destinatarios;
 
 	public Integer getId() {
 		return id;
@@ -55,6 +59,14 @@ public class Correo {
 
 	public void setLogin_Usuario(String login_Usuario) {
 		this.login_Usuario = login_Usuario;
+	}
+
+	public List<Contacto> getDestinatarios() {
+		return destinatarios;
+	}
+
+	public void setDestinatarios(List<Contacto> destinatarios) {
+		this.destinatarios = destinatarios;
 	}
 
 }

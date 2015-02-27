@@ -21,17 +21,17 @@ public class PerfilAction implements Accion {
 
 		String login = request.getParameter("user");
 
-		if (this.option.equals("profile")) {
-			request.setAttribute("currentpassword", true);
-			Usuario user = (Usuario) request.getSession().getAttribute("user");
-			login = user.getLogin();
-		}
-
 		UsuarioDao usersDao = Factories.persistence.createUsuarioDao();
 
 		Usuario user = usersDao.findByLogin(login);
 
-		request.setAttribute("profile", user);
+		if (this.option.equals("profile")) {
+			request.setAttribute("currentpassword", true);
+			request.setAttribute("profile", (Usuario) request.getSession()
+					.getAttribute("user"));
+		} else {
+			request.setAttribute("profile", user);
+		}
 
 		return "EXITO";
 	}

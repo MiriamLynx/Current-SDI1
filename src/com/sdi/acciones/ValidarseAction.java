@@ -8,8 +8,10 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.sdi.check.Check;
 import com.sdi.infrastructure.Factories;
+import com.sdi.model.Contacto;
 import com.sdi.model.Correo;
 import com.sdi.model.Usuario;
+import com.sdi.persistence.ContactoDao;
 import com.sdi.persistence.CorreoDao;
 import com.sdi.persistence.UsuarioDao;
 import com.sdi.persistence.exception.BusinessException;
@@ -22,7 +24,6 @@ public class ValidarseAction implements Accion {
 	public String execute(HttpServletRequest request,
 			HttpServletResponse response) {
 
-		List<Correo> mailList;
 		List<Usuario> activeUserList;
 		List<Usuario> inactiveUserList;
 
@@ -31,18 +32,32 @@ public class ValidarseAction implements Accion {
 
 		UsuarioDao usersDao = Factories.persistence.createUsuarioDao();
 		CorreoDao mailsDao = Factories.persistence.createCorreoDao();
+		ContactoDao contactsDao = Factories.persistence.createContactoDao();
 
 		try {
 
 			assertExisteUsuario(request, login);
 
+			List<Correo> correos = mailsDao.getLoginCorreos(login);
+
+			for (Correo c : correos) {
+				c.setDestinatarios(mailsDao.getDestinatariosCorreo(c.getId()));
+			}
+
+			user.setCorreos(mailsDao.getLoginCorreos(login));
+
+			user.setContactos(contactsDao.getLoginContactos(login));
+
 			assertValidSession(request, password);
 
 			if (user.getRol().equals("Cliente")) {
 
-				mailList = mailsDao.getLoginCarpetaCorreos(login, 1);
+				List<Contacto> adminContactsList = contactsDao
+						.getAdminContactos();
 
-				request.setAttribute("mailList", mailList);
+				join(adminContactsList);
+
+				request.setAttribute("mailList", user.getEnviados());
 
 				request.setAttribute("tittle", "Sent Mail");
 
@@ -73,6 +88,12 @@ public class ValidarseAction implements Accion {
 			return "FRACASO";
 		}
 
+	}
+
+	private void join(List<Contacto> adminContactsList) {
+		for (Contacto c : adminContactsList) {
+			user.getContactos().add(c);
+		}
 	}
 
 	private void assertValidSession(HttpServletRequest request, String password)
