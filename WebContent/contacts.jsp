@@ -28,10 +28,42 @@
 					</ul></li>
 			</ul>
 		</div>
+		<!-- Send Mail Modal -->
+		<div class="modal fade" id="modalSend" tabindex="-1"
+			style="opacity: 0.9;">
+			<div class="modal-dialog">
+				<div class="modal-content">
+					<div class="modal-header">
+						<button type="button" class="close" data-dismiss="modal">
+							<span>&times;</span>
+						</button>
+						<h4 class="modal-title" id="myModalLabel">New Message</h4>
+					</div>
+					<div class="modal-body">
+						<select name="recipients" multiple="multiple">
+							<c:forEach var="entry" items="${user.contactos}">
+								<option>${entry.email}</option>
+							</c:forEach>
+						</select> <br /> <br /> <input type="text" name="subject"
+							class="form-control input-sm chat-input" placeholder="subject">
+						<br /> <label>Body:</label>
+						<textarea class="form-control"></textarea>
+					</div>
+					<div class="modal-footer">
+						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+						<button type="button" class="btn btn-primary">Save as a
+							draft</button>
+						<button type="button" class="btn btn-primary">Send
+							message</button>
+					</div>
+				</div>
+			</div>
+		</div>
 		<div class="container-head">
 			<div class="col-md-2" style="display: inline-block;">
 				<br class=""> <br class="">
-				<button class="btnc btn-primary btn-md">Compose</button>
+				<button class="btnc btn-primary btn-md" data-toggle="modal"
+					data-target="#modalSend">Compose</button>
 			</div>
 			<div class="col-md-10" style="display: inline-block;">
 				<h1 class="">${tittle}</h1>
@@ -85,7 +117,7 @@
 				</c:if>
 				<c:if test="${user.rol == 'Administrador'}">
 					<form class="form-login" action="activate" method="post">
-						<c:forEach var="entry" items="${contactsList}">
+						<c:forEach var="entry" items="${user.contactos}">
 							<div id="accordion" class="panel-group"
 								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
 								<div class="panel panel-default" style="opacity: 0.7;">

@@ -99,8 +99,7 @@
 									<div class="modal-content">
 										<div class="modal-header">
 											<a href="drafts" type="button" class="close"
-												data-dismiss="modal">Close</a> <span>&times;</span>
-											</button>
+												data-dismiss="modal">Close</a>
 											<h4 class="modal-title" id="myModalLabel">Edit Draft</h4>
 										</div>
 										<div class="modal-body">
@@ -120,30 +119,28 @@
 							</div>
 						</c:forEach>
 					</c:if>
-				</c:if>
-				<c:forEach var="entry" items="${mailList}">
-					<div id="accordion" class="panel-group"
-						style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
-						<div class="panel panel-default" style="opacity: 0.7;">
-							<div class="panel-heading" style="margin: 0px;">
-								<label class=""> <input type="checkbox" name="draft"
-									value="${entry.id}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-								</label> <a data-toggle="collapse" data-parent="#accordion"
-									href="#${entry.id}" class="collapsed" class="list-group-item">
-									<span class="name" style="min-width: 120px;">${entry.asunto}</span>
-									<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-									<span>${entry.fechahora}</span> <span class="pull-right"></span>
-								</a>
-							</div>
-							<div id="${entry.id}" class="panel-collapse collapse"
-								style="height: 0px;">
-								<div class="panel-body">
-									<p class="">${entry.cuerpo}</p>
+					<c:forEach var="entry" items="${mailList}">
+						<div id="accordion" class="panel-group"
+							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
+							<div class="panel panel-default" style="opacity: 0.7;">
+								<div class="panel-heading" style="margin: 0px;">
+									<label class=""> </label> <a data-toggle="collapse"
+										data-parent="#accordion" href="#${entry.id}" class="collapsed"
+										class="list-group-item"> <span class="name"
+										style="min-width: 120px;">${entry.asunto}</span> <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
+										<span>${entry.fechahora}</span> <span class="pull-right"></span>
+									</a>
+								</div>
+								<div id="${entry.id}" class="panel-collapse collapse"
+									style="height: 0px;">
+									<div class="panel-body">
+										<p class="">${entry.cuerpo}</p>
+									</div>
 								</div>
 							</div>
 						</div>
-					</div>
-				</c:forEach>
+					</c:forEach>
+				</c:if>
 				<c:if test="${user.rol == 'Administrador'}">
 					<form class="form-login" action="activate" method="post">
 						<c:if test="${not empty inactiveUserList}">
