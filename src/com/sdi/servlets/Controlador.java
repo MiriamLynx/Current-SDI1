@@ -15,6 +15,7 @@ import alb.util.log.Log;
 import com.sdi.acciones.Accion;
 import com.sdi.acciones.ActivarODesactivarUsuariosAction;
 import com.sdi.acciones.ModificarUsuarioAction;
+import com.sdi.acciones.NuevoContactoAction;
 import com.sdi.acciones.PerfilAction;
 import com.sdi.acciones.RegistrarseAction;
 import com.sdi.acciones.SalirAction;
@@ -128,6 +129,7 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		mapaRegistrado.put("updateprofile", new PerfilAction("profile"));
 		mapaRegistrado.put("modifyuser", new ModificarUsuarioAction());
 		mapaRegistrado.put("contacts", new VerContactosAction());
+		mapaRegistrado.put("newcontact", new NuevoContactoAction());
 		mapaDeAcciones.put("REGISTRADO", mapaRegistrado);
 
 		Map<String, Accion> mapaAdmin = new HashMap<String, Accion>();
@@ -139,6 +141,7 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		mapaAdmin.put("updateprofile", new PerfilAction("profile"));
 		mapaAdmin.put("modifyuser", new ModificarUsuarioAction());
 		mapaAdmin.put("contacts", new VerContactosAction());
+		mapaAdmin.put("newcontact", new NuevoContactoAction());
 		mapaDeAcciones.put("ADMIN", mapaAdmin);
 	}
 
@@ -188,6 +191,10 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		resJSP = new HashMap<String, String>();
 		resJSP.put("EXITO", "/contacts.jsp");
 		opcionResJSP.put("contacts", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("FRACASO", "/addContact.jsp");
+		resJSP.put("EXITO", "/addContact.jsp");
+		opcionResJSP.put("newcontact", resJSP);
 
 		mapaDeNavegacion.put("REGISTRADO", opcionResJSP);
 
@@ -219,6 +226,10 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		resJSP = new HashMap<String, String>();
 		resJSP.put("EXITO", "/contacts.jsp");
 		opcionResJSP.put("contacts", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("FRACASO", "/addContact.jsp");
+		resJSP.put("EXITO", "/addContact.jsp");
+		opcionResJSP.put("newcontact", resJSP);
 
 		mapaDeNavegacion.put("ADMIN", opcionResJSP);
 

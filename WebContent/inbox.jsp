@@ -90,6 +90,16 @@
 			<!-- Tab panes -->
 			<div class="wrap">
 				<c:if test="${user.rol == 'Cliente'}">
+					<div id="accordion" class="panel-group"
+						style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
+						<h4 style="color: #CECEF6; display: inline-block;">Order by</h4>
+					</div>
+					<div id="accordion" class="panel-group"
+						style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
+
+						<a href="orderbyname" class="btn btn-primary btn-md"
+							style="display: inline-block; padding: 0px; padding-right: 2x; padding-left: 2x;">Subject</a>
+					</div>
 					<c:if test="${tittle == 'Drafts'}">
 						<c:forEach var="entry" items="${mailList}">
 							<!-- Edit Draft Modal -->

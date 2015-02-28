@@ -89,14 +89,20 @@
 		<div class="col-md-10">
 			<!-- Tab panes -->
 			<div class="wrap">
+				<div id="accordion" class="panel-group"
+					style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
+					<a href="addContact.jsp" class="btn btn-primary btn-md"
+						style="display: inline-block; padding: 0px; padding-right: 2x; padding-left: 2x;">New
+						Contact</a>
+				</div>
+				<br /> <br />
 				<c:if test="${user.rol == 'Cliente'}">
 					<c:forEach var="entry" items="${user.contactos}">
 						<div id="accordion" class="panel-group"
 							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
 							<div class="panel panel-default" style="opacity: 0.7;">
 								<div class="panel-heading" style="margin: 0px;">
-									<label class=""> <input type="checkbox" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									</label> <a data-toggle="collapse" data-parent="#accordion"
+									<a data-toggle="collapse" data-parent="#accordion"
 										href="#${entry.id}" class="collapsed" class="list-group-item">
 										<span class="name" style="min-width: 120px;">${entry.nombre}</span>
 										<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
@@ -122,8 +128,7 @@
 								style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
 								<div class="panel panel-default" style="opacity: 0.7;">
 									<div class="panel-heading" style="margin: 0px;">
-										<label class=""> <input type="checkbox" class="">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-										</label> <a data-toggle="collapse" data-parent="#accordion"
+										<a data-toggle="collapse" data-parent="#accordion"
 											href="#${entry.id}" class="collapsed" class="list-group-item">
 											<span class="name" style="min-width: 120px;">${entry.nombre}</span>
 											<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
