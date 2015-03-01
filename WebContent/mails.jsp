@@ -8,6 +8,10 @@
 	rel="stylesheet">
 <!-- Custom CSS -->
 <link href="css/inbox.css" rel="stylesheet">
+<link rel="stylesheet" type="text/css"
+	href="https://select2.github.io/select2/select2-3.4.1/select2.css" />
+<link rel="stylesheet" type="text/css"
+	href="https://raw.githubusercontent.com/t0m/select2-bootstrap-css/bootstrap3/select2-bootstrap.css" />
 
 <BODY>
 	<div class="container">
@@ -50,7 +54,8 @@
 						<h4 class="modal-title" id="myModalLabel">New Message</h4>
 					</div>
 					<div class="modal-body">
-						<select name="recipients" multiple="multiple">
+						<label>Recipients:</label> <select name="recipients" id="multiple"
+							class="select2" multiple="multiple" style="width: 400px;">
 							<c:forEach var="entry" items="${user.contactos}">
 								<option>${entry.email}</option>
 							</c:forEach>
@@ -162,6 +167,26 @@
 			</div>
 		</div>
 	</div>
+	<script
+		src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+	<script
+		src="https://select2.github.io/select2/select2-3.4.1/select2.js"></script>
+	<script>
+		$('.select2').select2({
+			placeholder : ''
+		});
+
+		$('.select2-remote').select2({
+			data : [ {
+				id : 'A',
+				text : 'A'
+			} ]
+		});
+
+		$('button[data-select2-open]').click(function() {
+			$('#' + $(this).data('select2-open')).select2('open');
+		});
+	</script>
 	<script src="http://listjs.com/no-cdn/list.js"></script>
 	<script type="text/javascript">
 		var options = {
