@@ -62,8 +62,10 @@
 		<div class="container-head">
 			<div class="col-md-2" style="display: inline-block;">
 				<br class=""> <br class="">
-				<button class="btnc btn-primary btn-md" data-toggle="modal"
-					data-target="#modalSend">Compose</button>
+				<c:if test="${user.rol == 'Cliente'}">
+					<button class="btnc btn-primary btn-md" data-toggle="modal"
+						data-target="#modalSend">Compose</button>
+				</c:if>
 			</div>
 			<div class="col-md-10" style="display: inline-block;">
 				<h1 class="">${tittle}</h1>

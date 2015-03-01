@@ -48,82 +48,12 @@
 		</div>
 		<script src="http://listjs.com/no-cdn/list.js"></script>
 		<div class="col-md-10">
-			<!-- Tab panes -->
-			<div class="wrap">
-				<form class="form-login" action="activate" method="post">
-					<c:if test="${not empty inactiveUserList}">
-						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
-							<h4 style="color: #CECEF6; display: inline-block;">Inactive
-								Users</h4>
-						</div>
-						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
-							<button class="btn btn-primary btn-md"
-								style="display: inline-block; padding: 0px; padding-right: 2x; padding-left: 2x;">Activate</button>
-						</div>
-					</c:if>
-					<c:forEach var="entry" items="${inactiveUserList}">
-						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
-							<div class="panel panel-default" style="opacity: 0.7;">
-								<div class="panel-heading" style="margin: 0px;">
-									<label class=""> <input type="checkbox"
-										name="toActivate" value="${entry.login}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									</label> <a href="profile?user=${entry.login}"> <span class="name"
-										style="min-width: 120px;">${entry.nombre}</span> <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-										<span>${entry.apellidos}</span><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-										<span>${entry.email}</span> <span class="pull-right"></span>
-									</a>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</form>
-				<form class="form-login" action="deactivate" method="post">
-					<c:if
-						test="${not empty activeUserList && not empty inactiveUserList}">
-						<br />
-					</c:if>
-					<c:if test="${not empty activeUserList}">
-						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
-							<h4 style="color: #CECEF6; display: inline-block;">Active
-								Users</h4>
-						</div>
-						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px; display: inline-block;">
-							<button class="btn btn-primary btn-md"
-								style="display: inline-block; padding: 0px; padding-right: 2x; padding-left: 2x;">Deactivate</button>
-						</div>
-					</c:if>
-					<c:forEach var="entry" items="${activeUserList}">
-						<div id="accordion" class="panel-group"
-							style="margin-bottom: 0px; margin-left: 40px; margin-right: 40px;">
-							<div class="panel panel-default" style="opacity: 0.7;">
-								<div class="panel-heading" style="margin: 0px;">
-									<label class=""> <input type="checkbox"
-										name="toDeactivate" value="${entry.login}">&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-									</label> <a href="profile?user=${entry.login}"><span class="name"
-										style="min-width: 120px;">${entry.nombre}</span> <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-										<span>${entry.apellidos}</span><label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-										<span>${entry.email}</span> <span class="pull-right"></span></a>
-								</div>
-							</div>
-						</div>
-					</c:forEach>
-				</form>
-			</div>
+			<!-- Includes -->
+			<jsp:include page="active.jsp"></jsp:include>
+			<br />
+			<jsp:include page="inactive.jsp"></jsp:include>
 		</div>
 	</div>
-
-	<script type="text/javascript">
-		var options = {
-			valueNames : [ 'subject', 'body', 'date' ]
-		};
-
-		var userList = new List('mailList', options);
-	</script>
 
 	<!-- BOOTSTRAP CORE JS -->
 	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->

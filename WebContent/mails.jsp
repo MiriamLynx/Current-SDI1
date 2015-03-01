@@ -16,7 +16,7 @@
 				<a class="navbar-brand" href="#">Lynxmail</a>
 			</div>
 			<ul class="nav navbar-nav">
-				<li class="active"><a href="sentmail" class="">Home</a></li>
+				<li class="active"><a href="#" class="">Home</a></li>
 				<li><a href="#" class="">About</a></li>
 				<li><a href="#" class="">Contact</a></li>
 				<li class="dropdown"><a href="#" class="dropdown-toggle"
@@ -94,9 +94,8 @@
 						style="padding: 0px; padding-right: 2x; padding-left: 2x;">Sort
 						by date</button>
 
-					<br />
-					<br /> <input type="text" class="form-control search" name="search"
-						id="search" placeholder="search">
+					<br /> <br /> <input type="text" class="form-control search"
+						name="search" id="search" placeholder="search">
 				</div>
 				<br /> <br />
 				<c:if test="${tittle == 'Drafts'}">

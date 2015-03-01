@@ -44,9 +44,9 @@
 						class="form-control input-sm chat-input" placeholder="address">
 					<br class=""> <input type="text" name="mail"
 						class="form-control input-sm chat-input" placeholder="mail">
-					<br class=""><input type="text" required
-						name="city" class="form-control input-sm chat-input"
-						placeholder="city">
+					<br class="">
+					<input type="text" required name="city"
+						class="form-control input-sm chat-input" placeholder="city">
 					<c:if test="${not empty error}">
 						<br />
 						<div style="color: red;">${error}</div>
