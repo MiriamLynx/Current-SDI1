@@ -17,8 +17,8 @@ public class NuevoContactoAction implements Accion {
 
 		String name = request.getParameter("name");
 		String surname = request.getParameter("surname");
-		String address = request.getParameter("password");
-		String mail = request.getParameter("address");
+		String address = request.getParameter("address");
+		String mail = request.getParameter("mail");
 		String city = request.getParameter("city");
 
 		ContactoDao contactsDao = Factories.persistence.createContactoDao();

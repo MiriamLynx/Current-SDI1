@@ -170,19 +170,19 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		resJSP = new HashMap<String, String>();
 
 		// Mapa de navegación de usuarios registrados
-		resJSP.put("EXITO", "/inbox.jsp");
+		resJSP.put("EXITO", "/mails.jsp");
 		opcionResJSP.put("signin", resJSP);
 		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/inbox.jsp");
+		resJSP.put("EXITO", "/mails.jsp");
 		opcionResJSP.put("sentmail", resJSP);
 		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/inbox.jsp");
+		resJSP.put("EXITO", "/mails.jsp");
 		opcionResJSP.put("drafts", resJSP);
 		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/inbox.jsp");
+		resJSP.put("EXITO", "/mails.jsp");
 		opcionResJSP.put("deleted", resJSP);
 		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/modify.jsp");
+		resJSP.put("EXITO", "/mails.jsp");
 		opcionResJSP.put("modifyuser", resJSP);
 		resJSP = new HashMap<String, String>();
 		resJSP.put("FRACASO", "/modify.jsp");
@@ -202,19 +202,19 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		resJSP = new HashMap<String, String>();
 
 		// Mapa de navegación del administrador
-		resJSP.put("EXITO", "/inbox.jsp");
+		resJSP.put("EXITO", "/users.jsp");
 		opcionResJSP.put("signin", resJSP);
 		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/inbox.jsp");
+		resJSP.put("EXITO", "/users.jsp");
 		opcionResJSP.put("users", resJSP);
 		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/inbox.jsp");
+		resJSP.put("EXITO", "/users.jsp");
 		opcionResJSP.put("activate", resJSP);
 		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/inbox.jsp");
+		resJSP.put("EXITO", "/users.jsp");
 		opcionResJSP.put("deactivate", resJSP);
 		resJSP = new HashMap<String, String>();
-		resJSP.put("EXITO", "/modify.jsp");
+		resJSP.put("EXITO", "/users.jsp");
 		opcionResJSP.put("profile", resJSP);
 		resJSP = new HashMap<String, String>();
 		resJSP.put("EXITO", "/modify.jsp");
