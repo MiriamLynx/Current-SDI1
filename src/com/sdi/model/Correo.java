@@ -2,6 +2,8 @@ package com.sdi.model;
 
 import java.util.List;
 
+import com.sdi.check.Check;
+
 public class Correo {
 
 	private Integer id;
@@ -10,8 +12,8 @@ public class Correo {
 	private String cuerpo;
 	private int carpeta;
 	private String login_Usuario;
-
 	private List<Contacto> destinatarios;
+	private String formatedDate;
 
 	public Integer getId() {
 		return id;
@@ -67,6 +69,14 @@ public class Correo {
 
 	public void setDestinatarios(List<Contacto> destinatarios) {
 		this.destinatarios = destinatarios;
+	}
+
+	public String getFormatedDate() {
+		return this.formatedDate;
+	}
+
+	public void setFormatedDate() {
+		this.formatedDate = Check.date(getFechahora());
 	}
 
 }

@@ -1,6 +1,8 @@
 package com.sdi.check;
 
 import java.sql.SQLException;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 import javax.servlet.http.HttpServletRequest;
 
@@ -48,6 +50,13 @@ public class Check {
 			}
 		}
 		return false;
+	}
+
+	public static String date(double d) {
+		SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm:ss");
+		Date now = new Date((long) d);
+		String strDate = sdfDate.format(now);
+		return strDate;
 	}
 
 }

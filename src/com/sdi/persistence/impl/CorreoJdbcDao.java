@@ -164,6 +164,7 @@ public class CorreoJdbcDao implements CorreoDao {
 				correo.setCuerpo(rs.getString("CUERPO"));
 				correo.setCarpeta(rs.getInt("CARPETA"));
 				correo.setLogin_Usuario(rs.getString("LOGIN_USUARIO"));
+				correo.setFormatedDate();
 				correos.add(correo);
 			}
 		} catch (SQLException e) {

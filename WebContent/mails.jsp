@@ -47,30 +47,34 @@
 			style="opacity: 0.9;">
 			<div class="modal-dialog">
 				<div class="modal-content">
-					<div class="modal-header">
-						<button type="button" class="close" data-dismiss="modal">
-							<span>&times;</span>
-						</button>
-						<h4 class="modal-title" id="myModalLabel">New Message</h4>
-					</div>
-					<div class="modal-body">
-						<label>Recipients:</label> <select name="recipients" id="multiple"
-							class="select2" multiple="multiple" style="width: 400px;">
-							<c:forEach var="entry" items="${user.contactos}">
-								<option>${entry.email}</option>
-							</c:forEach>
-						</select> <br /> <br /> <input type="text" name="subject"
-							class="form-control input-sm chat-input" placeholder="subject">
-						<br /> <label>Body:</label>
-						<textarea class="form-control"></textarea>
-					</div>
-					<div class="modal-footer">
-						<button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-						<button type="button" class="btn btn-primary">Save as a
-							draft</button>
-						<button type="button" class="btn btn-primary">Send
-							message</button>
-					</div>
+					<form class="form-login" action="sendSave" method="post">
+						<div class="modal-header">
+							<button type="button" class="close" data-dismiss="modal">
+								<span>&times;</span>
+							</button>
+							<h4 class="modal-title" id="myModalLabel">New Message</h4>
+						</div>
+						<div class="modal-body">
+							<label>Recipients:</label> <select required name="recipients"
+								id="multiple" class="select2" multiple="multiple"
+								style="width: 400px;">
+								<c:forEach var="entry" items="${user.contactos}">
+									<option value="${entry.id}">${entry.email}</option>
+								</c:forEach>
+							</select> <br /> <br /> <input required type="text" name="subject"
+								class="form-control input-sm chat-input" placeholder="subject">
+							<br /> <label>Body:</label>
+							<textarea required name="body" class="form-control"></textarea>
+						</div>
+						<div class="modal-footer">
+							<button type="button" class="btn btn-default"
+								data-dismiss="modal">Close</button>
+							<button type="submit" name="action" value="save"
+								class="btn btn-primary">Save as a draft</button>
+							<button type="submit" name="action" value="send"
+								class="btn btn-primary">Send message</button>
+						</div>
+					</form>
 				</div>
 			</div>
 		</div>
@@ -110,23 +114,34 @@
 							style="opacity: 0.9;">
 							<div class="modal-dialog">
 								<div class="modal-content">
-									<div class="modal-header">
-										<a href="drafts" type="button" class="close"
-											data-dismiss="modal">Close</a>
-										<h4 class="modal-title" id="myModalLabel">Edit Draft</h4>
-									</div>
-									<div class="modal-body">
-										<input type="text" required name="subject"
-											class="form-control input-sm chat-input"
-											value="${entry.asunto}"> <label>Body:</label>
-										<textarea class="form-control">${entry.cuerpo}</textarea>
-									</div>
-									<div class="modal-footer">
-										<a href="drafts" type="button" class="btn btn-default"
-											data-dismiss="modal">Close</a>
-										<button type="button" class="btn btn-primary">Save
-											changes</button>
-									</div>
+									<form class="form-login" action="sendUpdateDraft" method="post">
+										<div class="modal-header">
+											<a href="drafts" type="button" class="close"
+												data-dismiss="modal">Close</a>
+											<h4 class="modal-title" id="myModalLabel">Edit Draft</h4>
+										</div>
+										<div class="modal-body">
+											<input name="id" type="hidden" value="${entry.id}"> <label>Recipients:</label>
+											<select required name="recipients" id="multiple"
+												class="select2" multiple="multiple" style="width: 400px;">
+												<c:forEach var="recipient" items="${user.contactos}">
+													<option value="${recipient.id}">${recipient.email}</option>
+												</c:forEach>
+											</select> <br /> <br /> <input value="${entry.asunto}" required
+												type="text" name="subject"
+												class="form-control input-sm chat-input"
+												placeholder="subject"> <br /> <label>Body:</label>
+											<textarea required name="body" class="form-control">${entry.cuerpo}</textarea>
+										</div>
+										<div class="modal-footer">
+											<a href="drafts" type="button" class="btn btn-default"
+												data-dismiss="modal">Close</a>
+											<button type="submit" name="action" value="save"
+												class="btn btn-primary">Update draft</button>
+											<button type="submit" name="action" value="send"
+												class="btn btn-primary">Send message</button>
+										</div>
+									</form>
 								</div>
 							</div>
 						</div>
@@ -147,7 +162,7 @@
 
 											<span class="subject" style="min-width: 120px;">${entry.asunto}</span>
 											<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-											<span class="date">${entry.fechahora}</span> <span
+											<span class="date">${entry.formatedDate}</span> <span
 											class="pull-right"></span>
 
 										</a>

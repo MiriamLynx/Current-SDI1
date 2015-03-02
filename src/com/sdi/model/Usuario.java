@@ -123,7 +123,7 @@ public class Usuario {
 	public List<Correo> getEliminados() {
 		List<Correo> eliminados = new ArrayList<Correo>();
 		for (Correo c : correos) {
-			if (c.getCarpeta() == 2) {
+			if (c.getCarpeta() == 3) {
 				eliminados.add(c);
 			}
 		}

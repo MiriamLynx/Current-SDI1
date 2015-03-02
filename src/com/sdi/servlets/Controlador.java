@@ -14,6 +14,7 @@ import alb.util.log.Log;
 
 import com.sdi.acciones.Accion;
 import com.sdi.acciones.ActivarODesactivarUsuariosAction;
+import com.sdi.acciones.EnviarOGuardarCorreoAction;
 import com.sdi.acciones.ModificarUsuarioAction;
 import com.sdi.acciones.NuevoContactoAction;
 import com.sdi.acciones.PerfilAction;
@@ -130,6 +131,8 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		mapaRegistrado.put("modifyuser", new ModificarUsuarioAction());
 		mapaRegistrado.put("contacts", new VerContactosAction());
 		mapaRegistrado.put("newcontact", new NuevoContactoAction());
+		mapaRegistrado.put("sendSave", new EnviarOGuardarCorreoAction("new"));
+		mapaRegistrado.put("sendUpdateDraft", new EnviarOGuardarCorreoAction("draft"));
 		mapaDeAcciones.put("REGISTRADO", mapaRegistrado);
 
 		Map<String, Accion> mapaAdmin = new HashMap<String, Accion>();
@@ -195,6 +198,12 @@ public class Controlador extends javax.servlet.http.HttpServlet {
 		resJSP.put("FRACASO", "/addContact.jsp");
 		resJSP.put("EXITO", "/addContact.jsp");
 		opcionResJSP.put("newcontact", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/mails.jsp");
+		opcionResJSP.put("sendSave", resJSP);
+		resJSP = new HashMap<String, String>();
+		resJSP.put("EXITO", "/mails.jsp");
+		opcionResJSP.put("sendUpdateDraft", resJSP);
 
 		mapaDeNavegacion.put("REGISTRADO", opcionResJSP);
 
