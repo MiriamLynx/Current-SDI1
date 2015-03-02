@@ -61,6 +61,7 @@ public class EnviarOGuardarCorreoAction implements Accion {
 				recipientsDao.save(recipient);
 			}
 
+			mail.setFormatedDate();
 			user.getCorreos().add(mail);
 
 			if (option.equals("draft")) {
