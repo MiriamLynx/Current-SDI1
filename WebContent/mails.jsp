@@ -162,8 +162,8 @@
 
 											<span class="subject" style="min-width: 120px;">${entry.asunto}</span>
 											<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-											<span class="date">${entry.formatedDate}</span> <span
-											class="pull-right"></span>
+											<span class="pull-right"><span class="date">${entry.formatedDate}</span>
+										</span>
 
 										</a>
 

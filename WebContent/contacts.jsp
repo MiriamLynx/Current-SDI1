@@ -82,8 +82,9 @@
 											<span class="name" style="min-width: 120px;">${entry.nombre}</span>
 											<label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
 											<span class="surname">${entry.apellidos}</span> <label>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;</label>
-											<label>Agenda: </label> <span class="agenda_Usuario">${entry.agenda_Usuario}</span>
-											<span class="pull-right"></span>
+											<span class="pull-right"> <label>Agenda: </label> <span
+												class="agenda_Usuario">${entry.agenda_Usuario}</span>
+										</span>
 										</a>
 									</div>
 									<div id="${entry.id}" class="panel-collapse collapse"
